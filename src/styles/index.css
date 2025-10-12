@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  letter-spacing: 0px;
+}
+
+html,
+body {
+  font-size: 16px;
+  font-family: "Public Sans", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+:root {
+  /* typography */
+  --text-preset-1: bold 32px/1.2 "Public Sans", sans-serif;
+  --text-preset-2: bold 20px/1.2 "Public Sans", sans-serif;
+  --text-preset-3: bold 1rem/1.5 "Public Sans", sans-serif;
+  --text-preset-4: normal 14px/1.5 "Public Sans", sans-serif;
+  --text-preset-5: normal 12px/1.5 "Public sans", sans-serif;
+  /* Colors */
+  --Beige-100: rgb(248, 244, 240);
+  --Beige-500: rgb(152, 144, 139);
+  --Grey-100: rgb(248, 244, 240);
+  --Grey-300: rgb(179, 179, 179);
+  --Grey-500: rgb(105, 104, 104);
+  --Grey-900: rgb(32, 31, 36);
+  --Green: rgb(39, 124, 120);
+  --Yellow: rgb(242, 205, 172);
+  --Navy: rgb(98, 96, 112);
+  --Red: rgb(201, 71, 54);
+  --Cyan: rgb(130, 201, 215);
+  --Purple: rgb(130, 108, 176);
+  --Purple-2: rgb(175, 129, 186);
+  --Turquoise: rgb(89, 124, 124);
+  --Brown: rgb(147, 103, 79);
+  --Magenta: rgb(147, 79, 111);
+  --Blue: rgb(63, 130, 178);
+  --Navy-Grey: rgb(151, 160, 172);
+  --Army-Green: rgb(127, 145, 97);
+  --Gold: rgb(202, 179, 97);
+  --Orange: rgb(190, 108, 73);
+  --White: rgb(255, 255, 255);
+  /* Spacing */
+  --Spacing-500: 40px;
+  --Spacing-400: 32px;
+  --Spacing-300: 24px;
+  --Spacing-250: 20px;
+  --Spacing-200: 1rem;
+  --spacing-150: 12px;
+  --Spacing-100: 8px;
+  --spacing-50: 4px;
+}
+
+h1 {
+  font: var(--text-preset-1);
+}
+
+h2 {
+  font: var(--text-preset-2);
+}
+h3 {
+  font: var(--text-preset-3);
+}
+h4 {
+  font: var(--text-preset-4);
+}
+h5 {
+  font: var(--text-preset-5);
+}
