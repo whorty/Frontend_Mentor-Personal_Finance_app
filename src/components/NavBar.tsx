@@ -1,40 +1,48 @@
 import { useState } from "react";
 import "../styles/navbar.css";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import logoPathSmall from "../assets/images/logo-small.svg";
 import logoPathLarge from "../assets/images/logo-large.svg";
 
 export default function NavBar() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { pathname } = useLocation();
+  console.log(pathname);
   const menuItems = [
     { name: "Overview" },
     { name: "Transactions" },
     { name: "Budgets" },
     { name: "Pots" },
-    { name: "Recurring bills", path: "recurring-bills" },
+    { name: "RecurringBills" },
   ];
   return (
     <nav className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}>
       <div className="logo">
-        {isExpanded ? (
-          <img src={logoPathLarge} alt="Logo" />
-        ) : (
-          <img src={logoPathSmall} alt="Logo" />
-        )}
+        <Link to="/">
+          {isExpanded ? (
+            <img src={logoPathLarge} alt="Logo" />
+          ) : (
+            <img src={logoPathSmall} className="mini-logo" alt="Logo" />
+          )}
+        </Link>
       </div>
-      <div className="menu">
+      <ul className={`menu ${isExpanded && "active"}`}>
         {menuItems.map((item, index) => (
-          <div className="menu-item" key={index}>
-            <span className="icon">
-              <img
-                src={`./src/assets/images/icons/icon-nav-${
-                  item?.path ? item.path : item.name
-                }.svg`}
-              />
-            </span>
-            {isExpanded && <span>{item.name}</span>}
-          </div>
+          <li
+            className={`${pathname == "/" + item.name ? "PageActive" : ""}`}
+            key={index}
+          >
+            <NavLink to={`/${item.name}`} className="menu-item">
+              <span className="icon">
+                <img
+                  src={`./src/assets/images/icons/icon-nav-${item.name}.svg`}
+                />
+              </span>
+              {isExpanded && <span>{item.name}</span>}
+            </NavLink>
+          </li>
         ))}
-      </div>
+      </ul>
 
       <div className="toggle" onClick={() => setIsExpanded(!isExpanded)}>
         <span className="icon">

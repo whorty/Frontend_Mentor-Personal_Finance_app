@@ -16,6 +16,13 @@ a {
   color: inherit;
 }
 
+span,
+a {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
 ul,
 ol {
   list-style: none;
@@ -77,4 +84,14 @@ h4 {
 }
 h5 {
   font: var(--text-preset-5);
+}
+
+main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+section {
+  overflow-y: auto;
+  height: 100vh;
 }
