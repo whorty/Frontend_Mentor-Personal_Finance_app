@@ -34,7 +34,7 @@ ol {
   --text-preset-2: bold 20px/1.2 "Public Sans", sans-serif;
   --text-preset-3: bold 1rem/1.5 "Public Sans", sans-serif;
   --text-preset-4: normal 14px/1.5 "Public Sans", sans-serif;
-  --text-preset-5: normal 12px/1.5 "Public sans", sans-serif;
+  --text-preset-5: normal clamp(2vw, 1rem, 1vw) / 1.5 "Public sans", sans-serif;
   /* Colors */
   --Beige-100: rgb(248, 244, 240);
   --Beige-500: rgb(152, 144, 139);
@@ -87,11 +87,18 @@ h5 {
 }
 
 main {
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
 }
 
 section {
   overflow-y: auto;
   height: 100vh;
+  width: 100%;
+  padding: 32px 40px;
+}
+
+@media screen and (max-width: 375px) {
+  section {
+    padding: 16px 24px;
+  }
 }

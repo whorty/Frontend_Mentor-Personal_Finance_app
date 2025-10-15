@@ -38,7 +38,7 @@ export default function NavBar() {
                   src={`./src/assets/images/icons/icon-nav-${item.name}.svg`}
                 />
               </span>
-              {isExpanded && <span>{item.name}</span>}
+              <span>{item.name}</span>
             </NavLink>
           </li>
         ))}
@@ -51,8 +51,8 @@ export default function NavBar() {
             alt="minimize-arrow-button"
             className={`${isExpanded ? "rotate" : ""}`}
           />
-          {isExpanded && <span className="ml-200">Minimize Menu</span>}
         </span>
+        <span>Minimize Menu</span>
       </div>
     </nav>
   );

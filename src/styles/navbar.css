@@ -1,9 +1,9 @@
 .sidebar {
+  display: flex;
+  flex-direction: column;
   background-color: var(--Grey-900);
   color: var(--Grey-300);
   height: 100vh;
-  display: flex;
-  flex-direction: column;
   justify-content: space-between;
   transition: width 0.3s;
   border-radius: 0px 16px 16px 0px;
@@ -29,7 +29,6 @@
   padding-right: 24px;
 
   & > .menu .menu-item > span:last-child {
-    margin-left: var(--Spacing-200);
     font: var(--text-preset-3);
   }
   & > .logo img {
@@ -68,15 +67,30 @@
   height: 56px;
 }
 
-.menu-item {
+.menu-item,
+.toggle {
   display: flex;
   align-items: center;
   cursor: pointer;
   text-align: center;
+  overflow: hidden;
+  transition: all 0.2s;
+  & span:last-child {
+    max-width: 0;
+    opacity: 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
 }
 
-.menu.active .menu-item {
+.menu.active .menu-item,
+.menu.active + .toggle {
   width: 212px;
+  column-gap: var(--Spacing-200);
+  & span:last-child {
+    max-width: fit-content;
+    opacity: 1;
+  }
 }
 
 li:not(.PageActive):hover,
@@ -88,14 +102,8 @@ li:not(.PageActive):hover,
 }
 
 .toggle {
-  cursor: pointer;
   font-weight: bold;
   margin-bottom: var(--Spacing-500);
-}
-
-.ml-200 {
-  margin-left: var(--Spacing-200);
-  vertical-align: super;
 }
 
 .PageActive {
@@ -112,6 +120,75 @@ li:not(.PageActive):hover,
   }
 }
 
-.sidebar.collapsed .PageActive img {
+/* .sidebar.collapsed .PageActive img {
   filter: brightness(0);
+} */
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    flex-direction: row;
+    max-height: 74px;
+    border-radius: 8px 8px 0px 0px;
+    & .logo,
+    .toggle {
+      display: none;
+    }
+  }
+  .sidebar.collapsed,
+  .sidebar.expanded {
+    width: 100%;
+    max-width: 100%;
+    padding: 0px;
+    & > .menu .menu-item > span:last-child {
+      font: var(--text-preset-5);
+    }
+  }
+  .menu.active .menu-item,
+  .menu.active + .toggle {
+    width: initial;
+  }
+  .menu {
+    flex-direction: row;
+    justify-content: center;
+    height: 100%;
+    padding-top: 8px;
+    column-gap: clamp(0px, 4vw, 42px);
+    & li {
+      width: 100%;
+      max-width: 104px;
+      height: auto;
+    }
+  }
+  .sidebar .menu-item {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .menu-item span:last-child,
+  .toggle span:last-child {
+    max-width: fit-content;
+    opacity: 1;
+  }
+
+  .PageActive {
+    border-radius: 8px 8px 0px 0px;
+    border: none;
+    border-bottom: 4px solid var(--Green);
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .menu {
+    column-gap: 0px;
+    & li {
+      max-width: calc(68.6px + (100vw - 375px) * 0.1);
+    }
+  }
+  .menu-item span:last-child {
+    display: none;
+  }
 }

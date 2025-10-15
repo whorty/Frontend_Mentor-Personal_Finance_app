@@ -1,3 +1,7 @@
 export default function Budgets() {
-  return <h1>Budgets</h1>;
+  return (
+    <section>
+      <h1>Budgets</h1>
+    </section>
+  );
 }

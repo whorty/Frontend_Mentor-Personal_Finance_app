@@ -1,3 +1,7 @@
 export default function Pots() {
-  return <h1>Pots</h1>;
+  return (
+    <section>
+      <h1>Pots</h1>
+    </section>
+  );
 }
