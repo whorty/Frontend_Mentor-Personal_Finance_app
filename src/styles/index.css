@@ -90,15 +90,16 @@ main {
   display: flex;
 }
 
-section {
+nav + section {
   overflow-y: auto;
   height: 100vh;
   width: 100%;
   padding: 32px 40px;
+  background-color: var(--Beige-100);
 }
 
 @media screen and (max-width: 375px) {
-  section {
+  nav + section {
     padding: 16px 24px;
   }
 }

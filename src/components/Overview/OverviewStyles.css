@@ -1,0 +1,29 @@
+.overview {
+  & > h1 {
+    margin-bottom: 31px;
+  }
+  & .main-info {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(12px, 24px, 10vw);
+    & .cardinfo {
+      background-color: var(--White);
+      color: var(--Grey-900);
+      & h4 {
+        color: var(--Grey-500);
+      }
+    }
+    & .cardinfo:first-child {
+      background-color: var(--Grey-900);
+      color: var(--White);
+      & h4 {
+        color: var(--White);
+      }
+    }
+  }
+}
+.cardinfo {
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+}
