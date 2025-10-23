@@ -5,7 +5,9 @@
   & .main-info {
     display: flex;
     flex-direction: row;
-    gap: clamp(12px, 24px, 10vw);
+    gap: 24px;
+    margin-bottom: var(--Spacing-400);
+    overflow-x: auto;
     & .cardinfo {
       background-color: var(--White);
       color: var(--Grey-900);
@@ -26,4 +28,16 @@
   border-radius: 12px;
   padding: 24px;
   width: 100%;
+}
+
+@media (max-width: 425px) {
+  .overview .main-info {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 375px) {
+  .overview .main-info {
+    gap: 12px;
+    flex-direction: column;
+  }
 }
