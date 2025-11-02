@@ -17,4 +17,20 @@ export interface Balance {
   expenses: number;
 }
 
-export const DataContext = React.createContext<Balance[] | null>([]);
+export interface Total {
+  id: number;
+  name: string;
+  target: number;
+  total: number;
+  theme: string;
+}
+
+export interface PromiseVal {
+  BalanceData: Balance[] | null;
+  potsData: Total[];
+}
+
+export const DataContext = React.createContext<PromiseVal>({
+  BalanceData: null,
+  potsData: [],
+});

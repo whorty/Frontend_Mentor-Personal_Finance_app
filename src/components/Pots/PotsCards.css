@@ -1,0 +1,56 @@
+#Pots {
+  section {
+    display: flex;
+    gap: var(--Spacing-300);
+    flex-wrap: wrap;
+  }
+  .cardinfo {
+    max-width: 100vw; /*Needs fixing with nav when the navbar is expanded or collapse */
+    flex: 1 1 calc(50% - 16px);
+    &:last-child {
+      flex: 1;
+    }
+    & .potCard-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      column-gap: 16px;
+      align-items: center;
+      margin-bottom: var(--Spacing-400);
+      .ball {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: black;
+      }
+      .popup-container/*,button*/ {
+        flex-grow: 1;
+        text-align: end;
+      }
+    }
+    .potCard-barPercent {
+      .potCard-info {
+        margin-bottom: var(--Spacing-200);
+        h4,
+        h5 {
+          color: var(--Grey-500);
+        }
+      }
+    }
+    .potCard-options {
+      display: flex;
+      flex-direction: row;
+      column-gap: var(--Spacing-200);
+      margin-top: var(--Spacing-400);
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #Pots .cardinfo {
+    flex: none;
+  }
+}

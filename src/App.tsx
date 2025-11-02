@@ -6,21 +6,29 @@ import Transactions from "./routes/Transactions";
 import Budgets from "./routes/Budgets";
 import Pots from "./routes/Pots";
 import RecurringBills from "./routes/RecurringBills";
-import { DataContext, type Balance } from "./utils/DataContext";
-import { fetchBalance } from "./utils/db";
+import { DataContext, type Balance, type Total } from "./utils/DataContext";
+import { fetchBalance, fetchPots } from "./utils/db";
 
 export default function App() {
-  const [BalanceData, setBalanceData] = useState<Balance[] | null>(null);
+  const [BalanceData, setBalanceData] = useState<Balance[] | null>([]);
+  const [potsData, setPotsData] = useState<Total[]>([]);
   useEffect(() => {
     async function loadData() {
-      const data = await fetchBalance();
-      setBalanceData(data);
+      const dataBalance = await fetchBalance();
+      const dataPots = await fetchPots();
+      setBalanceData(dataBalance);
+      setPotsData(dataPots);
     }
     loadData();
   }, []);
+  // console.log("balanceData:", BalanceData);
+  const value = {
+    BalanceData,
+    potsData,
+  };
   return (
     <BrowserRouter>
-      <DataContext.Provider value={BalanceData}>
+      <DataContext.Provider value={value}>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="overview" element={<Overview />} />

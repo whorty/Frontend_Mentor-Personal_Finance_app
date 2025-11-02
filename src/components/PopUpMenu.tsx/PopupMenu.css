@@ -1,0 +1,64 @@
+.popup-container {
+  position: relative;
+}
+
+.popup-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.popup-button:hover {
+  background-color: #f0f0f0;
+  border-radius: inherit;
+}
+
+.popup-menu {
+  position: absolute;
+  background-color: var(--White);
+  top: 120%;
+  right: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-width: 8vw;
+  z-index: 100;
+  animation: fadeIn 0.15s ease;
+  padding: 20px 12px;
+}
+
+.popup-item {
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: var(--text-Preset-4);
+  transition: background 0.2s;
+  &:first-child {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--Grey-100);
+  }
+  &:last-child {
+    margin-top: 12px;
+  }
+}
+
+/* .popup-item:hover {
+  background: #f5f5f5;
+} */
+
+.popup-item.delete {
+  color: var(--Red);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

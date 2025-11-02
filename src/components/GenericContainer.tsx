@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { FaCaretRight } from "react-icons/fa";
 
 interface GenericContainerProps {
   name: string;
@@ -11,11 +12,12 @@ export default function GenericContainer({
   children,
 }: GenericContainerProps) {
   return (
-    <div className="generic">
+    <div className={`generic`}>
       <div className="details">
         <h2>{name}</h2>
         <NavLink className="link" to={route}>
-          {"See Details"}
+          {name == "Transactions" ? "View All" : "See Details"}
+          <FaCaretRight />
         </NavLink>
       </div>
       <div className={`body ${name}`}>{children}</div>

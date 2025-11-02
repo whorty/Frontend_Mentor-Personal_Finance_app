@@ -1,4 +1,4 @@
-.overview {
+#overview {
   & > h1 {
     margin-bottom: 31px;
   }
@@ -24,10 +24,64 @@
     }
   }
 }
-.cardinfo {
-  border-radius: 12px;
-  padding: 24px;
-  width: 100%;
+
+.overview-section {
+  display: grid;
+  grid-template-columns: auto auto;
+  /* grid-template-areas:
+    "Pots" "Budgets"
+    "Transactions" "Recurring Bills"; */
+  gap: 1.5rem;
+}
+
+.overviewPots {
+  display: flex;
+  column-gap: 20px;
+  & > div.total {
+    display: inherit;
+    width: 100%;
+    max-width: 247px;
+    align-items: center;
+    background-color: var(--Beige-100);
+    border-radius: 12px;
+    padding: 20px 16px;
+    gap: 16px;
+    & > div {
+      flex-direction: column;
+      & img {
+        margin: 0 6px;
+      }
+      & h4 {
+        color: var(--Grey-500);
+        margin-bottom: 11px;
+      }
+    }
+  }
+  & > div.detailInfo {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 16px;
+    & > div {
+      height: 43px;
+      display: flex;
+      align-items: center;
+      width: inherit;
+      max-width: 130px;
+    }
+    & > div .bar {
+      width: 4px;
+      border-radius: 8px;
+      height: inherit;
+      margin-right: 16px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .overview-section {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 425px) {

@@ -7,7 +7,7 @@ import logoPathLarge from "../assets/images/logo-large.svg";
 export default function NavBar() {
   const [isExpanded, setIsExpanded] = useState(false);
   const { pathname } = useLocation();
-  console.log(pathname);
+  // console.log(pathname);
   const menuItems = [
     { name: "Overview" },
     { name: "Transactions" },

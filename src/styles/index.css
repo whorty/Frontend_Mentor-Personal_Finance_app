@@ -35,7 +35,8 @@ ol {
   --text-preset-2: bold 20px/1.2 "Public Sans", sans-serif;
   --text-preset-3: bold 1rem/1.5 "Public Sans", sans-serif;
   --text-preset-4: normal 14px/1.5 "Public Sans", sans-serif;
-  --text-preset-5: normal clamp(2vw, 1rem, 1vw) / 1.5 "Public sans", sans-serif;
+  /* --text-preset-5: normal clamp(2vw, 1rem, 1vw) / 1.5 "Public sans", sans-serif; */
+  --text-preset-5: normal 12px/ 1.5 "Public sans", sans-serif;
   /* Colors */
   --Beige-100: rgb(248, 244, 240);
   --Beige-500: rgb(152, 144, 139);
@@ -98,6 +99,29 @@ nav + section {
   padding: clamp(16px, 4vw, 32px) clamp(20px, 5vw, 40px);
 }
 
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  -moz-appearance: none;
+  border: none;
+  background-color: transparent;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+progress {
+  width: 100%;
+}
+
+section > header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: var(--Spacing-400);
+  justify-content: space-between;
+  align-items: center;
+}
+
 .generic {
   padding: 32px;
   background-color: var(--White);
@@ -107,9 +131,46 @@ nav + section {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.25rem;
     & .link {
       color: var(--Grey-500);
       font: var(--text-preset-4);
+      &:hover {
+        color: var(--Grey-900);
+      }
     }
   }
+}
+
+.cardinfo {
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+}
+
+.btn {
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.bg-black {
+  background-color: var(--Grey-900);
+  color: white;
+}
+
+.bg-grey {
+  background-color: var(--Beige-100);
+  color: var(--Grey-900);
+}
+
+.bg-white {
+  background-color: white;
 }

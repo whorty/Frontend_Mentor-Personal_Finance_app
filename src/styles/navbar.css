@@ -13,7 +13,7 @@
 }
 
 .sidebar.collapsed {
-  width: 88px;
+  width: 78px;
   padding-right: 10px;
   & .toggle img {
     -webkit-transform: scale(-1, -1);
@@ -24,8 +24,8 @@
 }
 
 .sidebar.expanded {
-  width: 300px;
-  max-width: 300px;
+  width: 276px;
+  max-width: 276px;
   padding-right: 24px;
 
   & > .menu .menu-item > span:last-child {

@@ -29,3 +29,18 @@ export async function fetchTransactions() {
     return null;
   }
 }
+
+export async function fetchPots() {
+  try {
+    const { data, error } = await supabase
+      .from("Personal_Finance_App-Pots")
+      .select();
+    if (error) {
+      throw new Error("Error fetching data:", error);
+    }
+    return data;
+  } catch (e) {
+    console.error("Error:", e);
+    return [];
+  }
+}

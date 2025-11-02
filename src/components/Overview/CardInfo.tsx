@@ -2,15 +2,14 @@ import { DataContext } from "../../utils/DataContext";
 import { useContext } from "react";
 
 const formatUSD = (num: number): string =>
-  num.toLocaleString("en-US", {
+  num?.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
   });
 
 export default function CardInfo() {
-  const response = useContext(DataContext);
-  console.log(response);
-  if (!response)
+  const { BalanceData } = useContext(DataContext);
+  if (!BalanceData)
     return (
       <div className="cardinfo">
         <h4>Error Brining Data</h4>
@@ -18,9 +17,9 @@ export default function CardInfo() {
       </div>
     );
   const entries = {
-    current: response[0].current,
-    expenses: response[0].expenses,
-    income: response[0].income,
+    current: BalanceData[0]?.current,
+    expenses: BalanceData[0]?.expenses,
+    income: BalanceData[0]?.income,
   };
   const data = Object.entries(entries);
   {
