@@ -11,11 +11,11 @@ function getTotalTarget(pots: Total[]): number {
 export default function OverviewPots() {
   const { potsData } = useContext(DataContext);
   // const { pots } = data;
-  console.log(potsData);
+  // console.log(potsData);
   // console.log("data.json:", pots);
   // const totalSaved = getTotalTarget(pots);
   const totalSaved2 = getTotalTarget(potsData);
-  console.log("total:", totalSaved2);
+  // console.log("total:", totalSaved2);
   return (
     <div className="overviewPots">
       <div className="total">

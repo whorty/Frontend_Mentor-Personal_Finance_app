@@ -28,9 +28,11 @@ export interface Total {
 export interface PromiseVal {
   BalanceData: Balance[] | null;
   potsData: Total[];
+  transactionsData: Transaction[] | null;
 }
 
 export const DataContext = React.createContext<PromiseVal>({
   BalanceData: null,
   potsData: [],
+  transactionsData: [],
 });

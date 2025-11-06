@@ -3,6 +3,7 @@ import "../components/Overview/OverviewStyles.css";
 import "../components/GenericContainer";
 import GenericContainer from "../components/GenericContainer";
 import OverviewPots from "../components/Overview/OverviewPots";
+import OverviewTransactions from "../components/Overview/OverviewTransactions";
 
 export default function Overview() {
   return (
@@ -17,7 +18,7 @@ export default function Overview() {
         </GenericContainer>
         <GenericContainer name="Budgets" route="/Budgets"></GenericContainer>
         <GenericContainer name="Transactions" route="/Transactions">
-          hola
+          <OverviewTransactions />
         </GenericContainer>
         <GenericContainer name="Recurring Bills" route="/RecurringBills">
           hola

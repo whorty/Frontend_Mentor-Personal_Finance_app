@@ -123,7 +123,7 @@ section > header {
 }
 
 .generic {
-  padding: 32px;
+  padding: clamp(24px, 5vw, 32px) clamp(20px, 5vw, 32px);
   background-color: var(--White);
   border-radius: 12px;
   width: 100%;
