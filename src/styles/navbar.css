@@ -9,6 +9,7 @@
   border-radius: 0px 16px 16px 0px;
   place-items: center;
   box-sizing: content-box;
+  z-index: 1;
   /* overflow: hidden; */
 }
 
@@ -125,6 +126,9 @@ li:not(.PageActive):hover,
 } */
 
 @media screen and (max-width: 768px) {
+  main {
+    min-height: calc(100vh + 74px);
+  }
   .sidebar {
     position: fixed;
     width: 100%;

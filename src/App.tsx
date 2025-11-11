@@ -11,8 +11,14 @@ import {
   type Balance,
   type Total,
   type Transaction,
+  type TypeBudgets,
 } from "./utils/DataContext";
-import { fetchBalance, fetchPots, fetchTransactions } from "./utils/db";
+import {
+  fetchBalance,
+  fetchPots,
+  fetchTransactions,
+  fetchBudgets,
+} from "./utils/db";
 
 export default function App() {
   const [BalanceData, setBalanceData] = useState<Balance[] | null>([]);
@@ -20,24 +26,29 @@ export default function App() {
   const [transactionsData, setTransactionsData] = useState<
     Transaction[] | null
   >([]);
+  const [budgetsData, setBudgetsData] = useState<TypeBudgets[]>([]);
   useEffect(() => {
     async function loadData() {
       const dataBalance = await fetchBalance();
       const dataPots = await fetchPots();
       const dataTransaction = await fetchTransactions();
+      const dataBudgets = await fetchBudgets();
       setBalanceData(dataBalance);
       setPotsData(dataPots);
       setTransactionsData(dataTransaction);
+      setBudgetsData(dataBudgets);
     }
     loadData();
   }, []);
   // console.log("balanceData:", BalanceData);
   // console.log("PotData:", dataPots);
   // console.log("TransactionData:", transactionsData);
+  console.log("BudgetsData:", budgetsData);
   const value = {
     BalanceData,
     potsData,
     transactionsData,
+    budgetsData,
   };
   return (
     <BrowserRouter>

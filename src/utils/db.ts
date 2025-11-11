@@ -6,7 +6,7 @@ export async function fetchBalance() {
       .from("Personal_Finance_App-Balance")
       .select();
     if (error) {
-      throw new Error("Error fetching data:", error);
+      throw new Error("Error fetching data for balance:", error);
     }
     return data;
   } catch (e) {
@@ -21,7 +21,7 @@ export async function fetchTransactions() {
       .from("Personal_Finance_App-Transactions")
       .select();
     if (error) {
-      throw new Error("Error fetching data:", error);
+      throw new Error("Error fetching data for transactions:", error);
     }
     return data;
   } catch (e) {
@@ -36,7 +36,22 @@ export async function fetchPots() {
       .from("Personal_Finance_App-Pots")
       .select();
     if (error) {
-      throw new Error("Error fetching data:", error);
+      throw new Error("Error fetching data for pots:", error);
+    }
+    return data;
+  } catch (e) {
+    console.error("Error:", e);
+    return [];
+  }
+}
+
+export async function fetchBudgets() {
+  try {
+    const { data, error } = await supabase
+      .from("Personal_Finance _App-Budgets")
+      .select();
+    if (error) {
+      throw new Error("Error fetching data for budgets:", error);
     }
     return data;
   } catch (e) {

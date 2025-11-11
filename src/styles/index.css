@@ -10,6 +10,7 @@ body {
   font-size: 16px;
   font-family: "Public Sans", sans-serif;
   background-color: var(--Beige-100);
+  color: var(--Grey-900);
 }
 
 a {

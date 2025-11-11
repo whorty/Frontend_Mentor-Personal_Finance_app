@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 export default function OverviewTransactions() {
   const { transactionsData } = useContext(DataContext);
-  console.log(transactionsData);
+  // console.log(transactionsData);
   return (
     <>
       {transactionsData?.slice(0, 5).map((item) => (

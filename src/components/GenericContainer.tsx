@@ -12,7 +12,9 @@ export default function GenericContainer({
   children,
 }: GenericContainerProps) {
   return (
-    <div className={`generic`}>
+    <div
+      className={`generic ${name == "Recurring Bills" ? "Recurring" : name}`}
+    >
       <div className="details">
         <h2>{name}</h2>
         <NavLink className="link" to={route}>
@@ -20,7 +22,7 @@ export default function GenericContainer({
           <FaCaretRight />
         </NavLink>
       </div>
-      <div className={`body ${name}`}>{children}</div>
+      {children}
     </div>
   );
 }

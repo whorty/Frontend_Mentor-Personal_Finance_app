@@ -1,6 +1,7 @@
 // import data from "../../utils/data.json";
 import { DataContext, type Total } from "../../utils/DataContext";
 import { useContext } from "react";
+import DetailLabel from "../DetailsLabel";
 
 function getTotalTarget(pots: Total[]): number {
   return pots.reduce((sum: number, item: Total) => sum + item.total, 0);
@@ -32,15 +33,7 @@ export default function OverviewPots() {
       </div>
       <div className="detailInfo">
         {potsData.slice(0, 4).map((item) => (
-          <div key={item.id}>
-            <div className="bar" style={{ backgroundColor: item.theme }}></div>
-            <div>
-              <h5>{item.name}</h5>
-              <h4 className="bold">
-                <strong>{`$${item.total}`}</strong>
-              </h4>
-            </div>
-          </div>
+          <DetailLabel item={item} key={item.id} />
         ))}
       </div>
     </div>

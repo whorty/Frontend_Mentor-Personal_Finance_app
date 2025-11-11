@@ -28,10 +28,28 @@
 .overview-section {
   display: grid;
   grid-template-columns: auto auto;
-  /* grid-template-areas:
-    "Pots" "Budgets"
-    "Transactions" "Recurring Bills"; */
+  grid-template-rows: repeat(3, auto);
+  grid-template-areas:
+    "Pots Budgets"
+    "Transactions Budgets"
+    "Transactions Recurring";
   gap: 1.5rem;
+  .Pots {
+    grid-area: Pots;
+    /* grid-area: 1 / 1 / 2 / 2; */
+  }
+  .Transactions {
+    grid-area: Transactions;
+    /* grid-area: 2 / 1 / 4 / 2; */
+  }
+  .Budgets {
+    grid-area: Budgets;
+    /* grid-area: 1 / 2 / 3 / 3; */
+  }
+  .Recurring {
+    grid-area: Recurring;
+    /* grid-area: 3 / 2 / 4 / 3; */
+  }
 }
 
 .overviewPots {
@@ -57,24 +75,25 @@
       }
     }
   }
-  & > div.detailInfo {
+}
+
+div.detailInfo {
+  --calc: calc(calc(100% - 1rem) / 2);
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 16px;
+  & > div {
+    height: 43px;
     display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 16px;
-    & > div {
-      height: 43px;
-      display: flex;
-      align-items: center;
-      width: inherit;
-      max-width: 130px;
-    }
-    & > div .bar {
-      width: 4px;
-      border-radius: 8px;
-      height: inherit;
-      margin-right: 16px;
-    }
+    align-items: center;
+    min-width: clamp(101px, var(--calc), 100vw);
+  }
+  & > div .bar {
+    width: 4px;
+    border-radius: 8px;
+    height: inherit;
+    margin-right: 16px;
   }
 }
 
@@ -123,21 +142,202 @@
 }
 .minus {
   /* color: var(--Red); */
+  color: initial;
+}
+
+.overviewBudgets {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  position: relative;
+  justify-content: center;
+  z-index: 0;
+  .chart2 > path {
+    stroke: none;
+  }
+  .detailInfo {
+    flex-direction: column;
+  }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.chart {
+  min-width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+  /* Animate the rotation */
+  /* animation: rotateChart 1s ease-out forwards; */
+  background: conic-gradient(from var(--angle), var(--segments));
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 162px;
+    height: 162px;
+    background: var(--White);
+    border-radius: inherit;
+    z-index: 15;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    width: 187.5px;
+    height: 187.5px;
+    background: var(--White);
+    border-radius: inherit;
+    opacity: 0.25;
+    z-index: 15;
+  }
+  .chart-inner {
+    position: relative;
+    text-align: center;
+    z-index: 20;
+    h5 {
+      color: var(--Grey-500);
+    }
+  }
+}
+
+/* @keyframes rotateChart {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+} */
+
+@property --slice-fill {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+.slice {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--color) 0% var(--slice-fill),
+    transparent var(--slice-fill) 100%
+  );
+  animation: fillSlice 1s ease-out forwards;
+}
+
+@keyframes fillSlice {
+  from {
+    --slice-fill: 0%;
+  }
+  to {
+    --slice-fill: var(--target);
+  }
+}
+
+.chart2 {
+  text-align: center;
+  z-index: 1;
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h5 {
+    color: var(--Grey-500);
+  }
+  &::before {
+    content: " ";
+    position: absolute;
+    width: 162px;
+    height: 162px;
+    background: var(--White);
+    border-radius: 50%;
+    z-index: -1;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    width: 187.5px;
+    height: 187.5px;
+    background: var(--White);
+    border-radius: inherit;
+    opacity: 0.25;
+  }
+}
+
+.overviewRecurring {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 2rem;
+  .bill-capsule {
+    display: inherit;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    background-color: var(--Beige-100);
+    border-radius: 8px;
+    border-left: 4px solid var(--theme);
+    padding: 20px 16px;
+    > h4:first-child {
+      color: var(--Grey-500);
+      &:last-child {
+        color: var(--Grey-900);
+      }
+    }
+  }
+}
+
+.overviewBudgets,
+.overviewPots:focus,
+.overviewTransactions:focus,
+.overviewRecurring:focus {
+  user-select: none;
 }
 
 @media (max-width: 768px) {
   .overview-section {
+    grid-template-areas: "Pots Pots" "Transactions Transactions " "Budgets Budgets" "Recurring Recurring";
     grid-template-columns: 1fr;
+  }
+
+  div.detailInfo {
+    width: initial;
   }
 }
 
 @media (max-width: 425px) {
-  .overview .main-info {
+  #overview .main-info {
     flex-wrap: wrap;
+  }
+  .overviewPots {
+    flex-direction: column;
+    row-gap: 20px;
+    > div.total {
+      max-width: initial;
+    }
+  }
+  .overviewBudgets {
+    flex-direction: column;
+    > div.detailInfo {
+      flex-direction: row;
+      width: 100%;
+    }
   }
 }
 @media (max-width: 375px) {
-  .overview .main-info {
+  #overview .main-info {
     gap: 12px;
     flex-direction: column;
   }
