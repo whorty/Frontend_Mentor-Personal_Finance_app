@@ -1,4 +1,5 @@
-import type { TypeBudgets } from "../utils/DataContext";
+import type { TypeBudgets } from "../../utils/DataContext";
+import "./chart.css";
 
 type PieChart = {
   budgets: TypeBudgets[] | null;
@@ -10,7 +11,7 @@ export default function PieChart({ budgets }: PieChart) {
     (sum: number, b: { maximum: number }) => sum + b.maximum,
     0
   );
-  console.log(total);
+  // console.log(total);
   const spent = 338;
   // console.log("from chart:", budgets);
   // const percentUsed = (spent / totalLimit) * 100;

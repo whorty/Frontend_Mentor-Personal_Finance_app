@@ -2,20 +2,16 @@
 import ellipsis from "../../assets/images/icons/icon-ellipsis.svg";
 import type { Total } from "../../utils/DataContext";
 import { calcPercentage } from "../../utils/math";
-import PopupMenu from "../PopUpMenu.tsx/PopUpMenu";
+import CardHeader from "../CardHeader";
+import PopupMenu from "../PopUpMenu/PopupMenu";
 import { ProgressBarPots } from "../progressBar/ProgressBar";
 
 export default function PotsCards(props: Total) {
   return (
     <div className="cardinfo bg-white">
-      <div className="potCard-info">
-        <div className="ball" style={{ backgroundColor: props.theme }}></div>
-        <h2>{props.name}</h2>
-        {/* <button>
-          <img src={ellipsis} alt="elipsis icons for options" />
-        </button> */}
+      <CardHeader {...props}>
         <PopupMenu icon={ellipsis} label="Pot" />
-      </div>
+      </CardHeader>
       <div className="potCard-barPercent">
         <div className="potCard-info">
           <h4>Total Saved</h4>

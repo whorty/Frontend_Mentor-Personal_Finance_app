@@ -21,10 +21,16 @@ export function ProgressBarPots({ theme, total, target }: ProgressBar) {
   );
 }
 
-export function ProgressBarBudgets() {
+export function ProgressBarBudgets({ theme, total, target }: ProgressBar) {
   return (
-    <div className="progress-bar">
-      <div className="progress-fill" style={{ width: "20%" }}></div>
+    <div className="progress-barEx">
+      <div
+        className="progress-fill"
+        style={{
+          width: calcPercentage(total, target) + "%",
+          backgroundColor: theme,
+        }}
+      ></div>
     </div>
   );
 }

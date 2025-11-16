@@ -43,7 +43,7 @@ export default function App() {
   // console.log("balanceData:", BalanceData);
   // console.log("PotData:", dataPots);
   // console.log("TransactionData:", transactionsData);
-  console.log("BudgetsData:", budgetsData);
+  // console.log("BudgetsData:", budgetsData);
   const value = {
     BalanceData,
     potsData,

@@ -1,5 +1,6 @@
 import { PieChart } from "@mui/x-charts/PieChart";
-import type { TypeBudgets } from "../utils/DataContext";
+import type { TypeBudgets } from "../../utils/DataContext";
+import "./chart.css";
 
 type PieChart = {
   budgets: TypeBudgets[] | null;
@@ -18,7 +19,7 @@ export default function BasicPie({ budgets }: PieChart) {
     color: item.theme,
   }));
   return (
-    <>
+    <div style={{ position: "relative", display: "flex" }}>
       <PieChart
         series={[
           {
@@ -34,6 +35,6 @@ export default function BasicPie({ budgets }: PieChart) {
           <h5>of ${total} limit</h5>
         </div>
       </div>
-    </>
+    </div>
   );
 }

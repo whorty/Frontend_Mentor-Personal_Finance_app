@@ -1,0 +1,122 @@
+#Budgets {
+  h4,
+  h5 {
+    color: var(--Grey-500);
+    strong {
+      color: var(--Grey-900);
+    }
+  }
+  section {
+    display: flex;
+    flex-direction: row;
+    gap: var(--Spacing-400);
+    #Summary {
+      width: 100%;
+      max-width: 428px;
+      .generic {
+        display: flex;
+        flex-direction: column;
+        gap: var(--Spacing-400);
+        position: sticky;
+        top: 0;
+        > .chart {
+          align-self: center;
+        }
+      }
+    }
+    #Budget-details {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      row-gap: var(--Spacing-300);
+      > .cardinfo {
+        padding: 32px;
+        > h4 {
+          margin-top: -12px;
+          margin-bottom: 20px;
+        }
+      }
+      .Spending {
+        background-color: var(--Beige-100);
+        margin-top: 20px;
+        .overviewTransactions {
+          border-bottom: 1px solid var(--Grey-300);
+          &:last-child {
+            border: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.spending-summary {
+  width: 100%;
+  h2 {
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
+  .list-item:last-child {
+    margin-bottom: 0px;
+    border-bottom: none;
+    padding-bottom: 0px;
+  }
+  div {
+    display: flex;
+    flex-direction: row;
+    > .bar {
+      --bar-radius: 8px;
+      width: 4px;
+      height: 100%;
+      background-color: #e0e0e0;
+      position: relative;
+      border-radius: var(--bar-radius);
+      overflow: hidden;
+      .vertical-progress-bar {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-radius: var(--bar-radius);
+        transition: height 0.5s ease-in-out;
+      }
+    }
+    &:first-child {
+      column-gap: 20px;
+    }
+    &:last-child {
+      column-gap: 8px;
+    }
+    > div {
+      align-items: center;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #Budgets > section {
+    flex-direction: column;
+    #Summary {
+      max-width: 100%;
+      .generic {
+        flex-direction: row;
+        position: relative;
+      }
+    }
+  }
+}
+
+@media (max-width: 475px) {
+  #Budgets > section {
+    flex-direction: column;
+    #Summary {
+      max-width: 100%;
+      .generic {
+        flex-direction: column;
+      }
+    }
+  }
+  .Spending > .overviewTransactions > div > img {
+    display: none;
+  }
+}

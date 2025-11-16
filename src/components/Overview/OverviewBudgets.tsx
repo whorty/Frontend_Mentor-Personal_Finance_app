@@ -1,8 +1,8 @@
 import { DataContext } from "../../utils/DataContext";
 import { useContext } from "react";
 import "./OverviewStyles.css";
-// import BasicPie from "../PiechartLibrary";
-import PieChart from "../PieChart";
+// import BasicPie from "../Chart/PiechartLibrary";
+import PieChart from "../Chart/PieChart";
 import DetailLabel from "../DetailsLabel";
 
 export default function OverviewBudgets() {

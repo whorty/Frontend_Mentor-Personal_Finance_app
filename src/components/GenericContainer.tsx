@@ -16,9 +16,11 @@ export default function GenericContainer({
       className={`generic ${name == "Recurring Bills" ? "Recurring" : name}`}
     >
       <div className="details">
-        <h2>{name}</h2>
+        {name == "Lastest Spending" ? <h3>{name}</h3> : <h2>{name}</h2>}
         <NavLink className="link" to={route}>
-          {name == "Transactions" ? "View All" : "See Details"}
+          {["Transactions", "Lastest Spending"].includes(name)
+            ? "View All"
+            : "See Details"}
           <FaCaretRight />
         </NavLink>
       </div>
