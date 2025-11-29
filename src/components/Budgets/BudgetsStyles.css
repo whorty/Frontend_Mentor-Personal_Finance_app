@@ -48,6 +48,9 @@
       }
     }
   }
+  .popup-menu {
+    max-width: 8vw;
+  }
 }
 
 .spending-summary {

@@ -38,7 +38,9 @@ export default function NavBar() {
                   src={`./src/assets/images/icons/icon-nav-${item.name}.svg`}
                 />
               </span>
-              <span>{item.name}</span>
+              <span>
+                {item.name == "RecurringBills" ? "Recurring Bills" : item.name}
+              </span>
             </NavLink>
           </li>
         ))}
