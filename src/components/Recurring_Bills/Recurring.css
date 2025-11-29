@@ -1,0 +1,144 @@
+#Recurring {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 24px;
+  .mobile {
+    display: none;
+  }
+  > div:first-child {
+    width: 100%;
+    max-width: 418px;
+    display: flex;
+    gap: 24px;
+    flex-direction: column;
+    .list-style {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 1.25rem 0;
+      border-bottom: 1px solid var(--Grey-100);
+      padding-bottom: var(--Spacing-200);
+      &:last-child {
+        border-bottom: none;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        color: var(--Red);
+        h4:first-child {
+          color: inherit;
+        }
+      }
+      h4:first-child {
+        color: var(--Grey-500);
+      }
+    }
+  }
+  > .cardinfo {
+    padding: 32px;
+    .overviewTransactions {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      > div:first-child {
+        display: flex;
+      }
+    }
+  }
+  #inputs-bills {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 24px;
+    .input-custom.small {
+      max-width: 114px;
+    }
+  }
+  #headings,
+  #inputs-bills {
+    margin-bottom: var(--Spacing-300);
+  }
+  #headings {
+    color: var(--Grey-500);
+  }
+  .overviewTransactions {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+.due-date {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-left: 8px;
+  }
+}
+
+.black-card {
+  background-color: var(--Grey-900);
+  padding: 1.5rem;
+  color: var(--White);
+  width: 100%;
+  border-radius: 0.75rem;
+  img {
+    margin-bottom: 32px;
+  }
+}
+
+.white-card {
+  background-color: var(--White);
+  padding: 1.25rem;
+  width: 100%;
+  border-radius: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  #Recurring > div:first-child {
+    flex-direction: row;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 475px) {
+  #Recurring {
+    .input-custom {
+      width: 100%;
+    }
+    .input-layout .input-custom {
+      padding: 0;
+      border: none;
+    }
+    .desktop {
+      display: none;
+    }
+    .mobile {
+      display: flex;
+      justify-content: center;
+      font-size: 20px;
+    }
+    > .cardinfo .overviewTransactions {
+      grid-template-columns: 1fr auto;
+      row-gap: 8px;
+      > div:first-child {
+        grid-area: 1 / 1 / 1 / 2;
+      }
+      > h5 {
+        grid-area: 2 / 1 / 2 / 1;
+      }
+      > h4 {
+        grid-area: 2 / 2 / 2 / 2;
+      }
+    }
+    .overviewTransactions.desktop {
+      display: none;
+    }
+  }
+  #Recurring > div:first-child {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

@@ -1,0 +1,32 @@
+.input-custom {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+  border: 1px solid var(--Beige-500);
+  border-radius: 8px;
+  font-size: var(--text-preset-4);
+  padding: 12px 14.5px 12px 14.5px;
+  &:focus-within {
+    border-color: var(--Grey-900);
+  }
+  > input {
+    border: none;
+    border-radius: inherit;
+    padding-right: 1rem;
+    padding-left: 0.1rem;
+    width: 100%;
+    &:focus-visible {
+      outline: none;
+    }
+  }
+}
+
+.input-layout {
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+  > h4 {
+    color: var(--Grey-500);
+  }
+}

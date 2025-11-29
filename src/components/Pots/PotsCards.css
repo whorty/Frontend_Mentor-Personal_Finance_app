@@ -4,6 +4,9 @@
     gap: var(--Spacing-300);
     flex-wrap: wrap;
   }
+  .popup-menu {
+    max-width: 8vw;
+  }
 }
 
 @media screen and (max-width: 768px) {

@@ -104,6 +104,7 @@ div.detailInfo {
   border-bottom: 1px solid var(--Grey-100);
   padding-bottom: var(--Spacing-200);
   margin-bottom: 20px;
+  align-items: center;
   &:last-child {
     margin-bottom: 0px;
     border-bottom: none;

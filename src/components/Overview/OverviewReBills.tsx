@@ -6,6 +6,7 @@ export default function OverviewReBills() {
   ];
   const capsules = data.map((item) => (
     <div
+      key={item.name}
       className="bill-capsule"
       style={{ "--theme": item.theme } as React.CSSProperties}
     >
