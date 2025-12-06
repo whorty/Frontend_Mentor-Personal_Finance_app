@@ -45,3 +45,14 @@ export const DataContext = React.createContext<PromiseVal>({
   transactionsData: [],
   budgetsData: [],
 });
+
+export const SORT_OPTIONS = {
+  Latest: (a: Transaction, b: Transaction) =>
+    new Date(b.date).getTime() - new Date(a.date).getTime(),
+  Oldest: (a: Transaction, b: Transaction) =>
+    new Date(a.date).getTime() - new Date(b.date).getTime(),
+  "A to Z": (a: Transaction, b: Transaction) => a.name.localeCompare(b.name),
+  "Z to A": (a: Transaction, b: Transaction) => b.name.localeCompare(a.name),
+  Highest: (a: Transaction, b: Transaction) => b.amount - a.amount,
+  Lowest: (a: Transaction, b: Transaction) => a.amount - b.amount,
+};

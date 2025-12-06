@@ -3,14 +3,18 @@ import { IoIosSearch } from "react-icons/io";
 import { FaCaretDown } from "react-icons/fa";
 import "./inputs.css";
 
-export function Input_Search(props: { placeholder: string }) {
+export function Input_Search(props: {
+  placeholder: string;
+  onChange?: (query: string) => void;
+}) {
   return (
-    <div className="input-custom">
+    <div className="input-custom" id="Search">
       <input
         type="text"
         name={`search-${props.placeholder}`}
         id={`search-${props.placeholder}`}
         placeholder={`Search ${props.placeholder}`}
+        onChange={(e) => props.onChange?.(e.target.value)}
       />
       <IoIosSearch />
     </div>
@@ -21,12 +25,21 @@ type CustomInput = {
   label: string;
   onChange?: (option: string) => void;
   children: ReactNode;
+  options?: string[];
 };
 
+const optionsdefault = [
+  "Latest",
+  "Oldest",
+  "A to Z",
+  "Z to A",
+  "Highest",
+  "Lowest",
+];
 export function Input_Select(props: CustomInput) {
-  const options = ["Latest", "Oldest", "A to Z", "Z to A", "Highest", "Lowest"];
+  const optionsToUse = props.options || optionsdefault;
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<string>(options[0]);
+  const [selected, setSelected] = useState<string>(optionsToUse[0]);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -64,7 +77,7 @@ export function Input_Select(props: CustomInput) {
         </div>
         {open && (
           <div className="popup-menu">
-            {options.map((option) => (
+            {optionsToUse.map((option) => (
               <button
                 key={option}
                 className={`popup-item ${option == selected ? "selected" : ""}`}

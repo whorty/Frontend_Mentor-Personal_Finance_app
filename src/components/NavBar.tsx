@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/navbar.css";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import logoPathSmall from "../assets/images/logo-small.svg";
+// import logoPathSmall from "../assets/images/logo-small.svg";
 import logoPathLarge from "../assets/images/logo-large.svg";
 
 export default function NavBar() {
@@ -18,12 +18,15 @@ export default function NavBar() {
   return (
     <nav className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}>
       <div className="logo">
-        <Link to="/">
+        {/* <Link to="/">
           {isExpanded ? (
             <img src={logoPathLarge} alt="Logo" />
           ) : (
             <img src={logoPathSmall} className="mini-logo" alt="Logo" />
           )}
+        </Link> */}
+        <Link to="/" className={`reveal ${isExpanded && "active"}`}>
+          <img src={logoPathLarge} alt="Logo" />
         </Link>
       </div>
       <ul className={`menu ${isExpanded && "active"}`}>

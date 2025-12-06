@@ -32,9 +32,9 @@
   & > .menu .menu-item > span:last-child {
     font: var(--text-preset-3);
   }
-  & > .logo img {
+  /* & > .logo img {
     width: 149px;
-  }
+  } */
   & > .toggle,
   .logo {
     width: 100%;
@@ -49,6 +49,25 @@
 
 .mini-logo {
   width: 18px;
+}
+
+.reveal {
+  display: block;
+  width: 14px;
+  height: auto;
+  overflow: hidden;
+  &.active {
+    animation: reveal 1s ease forwards;
+  }
+}
+
+@keyframes reveal {
+  from {
+    width: 14px; /* Start cropped */
+  }
+  to {
+    width: 100%; /* Final full width of the logo */
+  }
 }
 
 .icon img {
@@ -66,6 +85,11 @@
   display: grid;
   justify-items: center;
   height: 56px;
+}
+
+a:not(.reveal) img,
+.icon img {
+  padding: 3px;
 }
 
 .menu-item,
@@ -188,7 +212,7 @@ li:not(.PageActive):hover,
   }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 425px) {
   .sidebar {
     max-height: 52px;
   }

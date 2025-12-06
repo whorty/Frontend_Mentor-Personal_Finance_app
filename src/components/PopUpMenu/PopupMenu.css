@@ -22,6 +22,8 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
   flex-direction: column;
   min-width: max-content;
   z-index: 100;

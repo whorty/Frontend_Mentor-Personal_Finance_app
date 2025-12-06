@@ -1,4 +1,4 @@
-export default function formatDate(isoString: string, format: string): string {
+export default function formatDate(isoString: string, format?: string): string {
   const date = new Date(isoString);
   const day = date.getDate();
   const month = date.toLocaleString("en-US", { month: "short" });

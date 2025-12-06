@@ -110,7 +110,7 @@ div.detailInfo {
     border-bottom: none;
     padding-bottom: 0px;
   }
-  > div:first-child {
+  > div:first-of-type {
     display: inherit;
     column-gap: 16px;
     align-items: center;
