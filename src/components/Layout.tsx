@@ -8,6 +8,7 @@ export default function Layout() {
       <Outlet />
       <section>
         <h1>TEST</h1>
+        <p>hello</p>
       </section>
     </main>
   );
