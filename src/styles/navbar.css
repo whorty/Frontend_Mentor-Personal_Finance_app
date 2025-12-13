@@ -4,7 +4,8 @@
   background-color: var(--Grey-900);
   color: var(--Grey-300);
   height: 100vh;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  row-gap: var(--Spacing-500);
   transition: width 0.3s;
   border-radius: 0px 16px 16px 0px;
   place-items: center;
@@ -53,7 +54,7 @@
 
 .reveal {
   display: block;
-  width: 14px;
+  width: 13.5px;
   height: auto;
   overflow: hidden;
   &.active {
@@ -129,6 +130,11 @@ li:not(.PageActive):hover,
 .toggle {
   font-weight: bold;
   margin-bottom: var(--Spacing-500);
+  flex: 1;
+  place-items: end;
+  > span:last-child {
+    height: 24px;
+  }
 }
 
 .PageActive {
@@ -213,6 +219,9 @@ li:not(.PageActive):hover,
 }
 
 @media screen and (max-width: 425px) {
+  main {
+    min-height: calc(100vh + 52px);
+  }
   .sidebar {
     max-height: 52px;
   }

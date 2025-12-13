@@ -106,14 +106,14 @@ export default function Transactions() {
           {currentTransactions.map((item) => (
             <div className="overviewTransactions" key={item.id}>
               <img
-                src={`./src/${item.avatar}`}
+                src={`/images/avatars/${item.avatar}`}
                 className="mobile"
                 alt="profile_image"
               />
               <div className="setup">
                 <img
                   className="desktop"
-                  src={`./src/${item.avatar}`}
+                  src={`/images/avatars/${item.avatar}`}
                   alt="profile_image"
                 />
                 <h4>{item.name}</h4>

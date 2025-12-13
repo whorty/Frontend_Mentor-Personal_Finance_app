@@ -21,10 +21,7 @@ export default function OverviewPots() {
     <div className="overviewPots">
       <div className="total">
         <div>
-          <img
-            src="./src/assets/images/icons/icon-pot.svg"
-            alt="icon of pots"
-          />
+          <img src="/images/icons/icon-pot.svg" alt="icon of pots" />
         </div>
         <div>
           <h4>Total Saved</h4>

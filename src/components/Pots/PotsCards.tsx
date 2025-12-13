@@ -1,5 +1,5 @@
 // import React from "react";
-import ellipsis from "../../assets/images/icons/icon-ellipsis.svg";
+import ellipsis from "/images/icons/icon-ellipsis.svg";
 import type { Total } from "../../utils/DataContext";
 import { calcPercentage } from "../../utils/math";
 import CardHeader from "../CardHeader";

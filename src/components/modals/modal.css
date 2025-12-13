@@ -1,0 +1,72 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}
+.modal-container {
+  background: var(--White);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 490px;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  overflow: visible;
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--Spacing-250);
+}
+.modal-close {
+  font-size: 32px;
+  display: inherit;
+  color: var(--Grey-500);
+  > svg {
+    padding: 3.25px;
+  }
+}
+.modal-paragraph {
+  color: var(--Grey-500);
+  margin: var(--Spacing-200) 0;
+}
+
+.modal-form label {
+  margin-bottom: 4px;
+  display: block;
+  font: var(--text-preset-5);
+  color: var(--Grey-500);
+}
+
+.modal-form .input-layout {
+  margin-bottom: 1rem;
+}
+
+.modal-form .popup-menu {
+  max-width: 100% !important;
+}
+
+.modal-form .input-custom,
+.modal-form .input-custom {
+  width: 100%;
+}
+.modal-actions {
+  margin-top: 20px;
+}
+.modal-actions .btn {
+  width: 100%;
+}
+
+/* small responsive tweak */
+@media (max-width: 600px) {
+  .modal-container {
+    width: 90%;
+    max-width: 520px;
+    padding: 20px;
+  }
+}

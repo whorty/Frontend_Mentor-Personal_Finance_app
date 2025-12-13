@@ -9,7 +9,7 @@ export default function TransactionsList({
   return (
     <div className="overviewTransactions">
       <div>
-        <img src={`./src/${transfer.avatar}`} alt="profile_image" />
+        <img src={`/images/avatars/${transfer.avatar}`} alt="profile_image" />
         <h4>{transfer.name}</h4>
       </div>
       <div>

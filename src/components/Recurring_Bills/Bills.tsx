@@ -69,7 +69,7 @@ export default function Bills() {
       {processedTransactions?.slice(0, 8).map((item) => (
         <div className="overviewTransactions" key={item.id}>
           <div>
-            <img src={`./src/${item.avatar}`} alt="profile_image" />
+            <img src={`/images/avatars/${item.avatar}`} alt="profile_image" />
             <h4>{item.name}</h4>
           </div>
           <h5 className="due-date">

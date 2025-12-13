@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/navbar.css";
 import { Link, NavLink, useLocation } from "react-router-dom";
 // import logoPathSmall from "../assets/images/logo-small.svg";
-import logoPathLarge from "../assets/images/logo-large.svg";
+import logoPathLarge from "/src/assets/logos/logo-large.svg";
 
 export default function NavBar() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -38,7 +38,8 @@ export default function NavBar() {
             <NavLink to={`/${item.name}`} className="menu-item">
               <span className="icon">
                 <img
-                  src={`./src/assets/images/icons/icon-nav-${item.name}.svg`}
+                  src={`/images/icons/icon-nav-${item.name.toLowerCase()}.svg`}
+                  alt={`nav_${item.name}`}
                 />
               </span>
               <span>
@@ -52,7 +53,7 @@ export default function NavBar() {
       <div className="toggle" onClick={() => setIsExpanded(!isExpanded)}>
         <span className="icon">
           <img
-            src="./src/assets/images/icons/icon-minimize-menu.svg"
+            src="/images/icons/icon-minimize-menu.svg"
             alt="minimize-arrow-button"
             className={`${isExpanded ? "rotate" : ""}`}
           />

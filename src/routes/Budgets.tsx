@@ -1,19 +1,21 @@
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useState } from "react";
 import PieChart from "../components/Chart/PieChart";
 import { DataContext, type Transaction } from "../utils/DataContext";
 import "../components/Budgets/BudgetsStyles.css";
 import DetailLabel, { SpendingSummaryExt } from "../components/DetailsLabel";
 import CardHeader from "../components/CardHeader";
 import PopupMenu from "../components/PopUpMenu/PopupMenu";
-import ellipsis from "../assets/images/icons/icon-ellipsis.svg";
+import ellipsis from "/images/icons/icon-ellipsis.svg";
 import { ProgressBarBudgets } from "../components/progressBar/ProgressBar";
 import getLastest from "../utils/getLastest";
 import getLastThreeFromMap from "../utils/getLastThreeFromMap";
 import GenericContainer from "../components/GenericContainer";
 import TransactionsList from "../components/TransactionsList";
+import Modal from "../components/modals/modal";
 
 export default function Budgets() {
   const { budgetsData, transactionsData } = useContext(DataContext);
+  const [openAdd, setOpenAdd] = useState(false);
   const totalSpentByCategory = useMemo(() => {
     if (!budgetsData || !transactionsData) return {} as Record<string, number>;
     const wanted = budgetsData.map((item) => item.category);
@@ -39,7 +41,13 @@ export default function Budgets() {
     <section id="Budgets">
       <header>
         <h1>Budgets</h1>
-        <button className="btn bg-black">+ Add New Budget</button>
+        <button
+          className="btn bg-black"
+          id="Add_New-Budget"
+          onClick={() => setOpenAdd(true)}
+        >
+          + Add New Budget
+        </button>
       </header>
       <section>
         <div id="Summary">
@@ -61,7 +69,7 @@ export default function Budgets() {
           {budgetsData?.map((item) => (
             <div className="cardinfo bg-white" key={item.category}>
               <CardHeader theme={item.theme} name={item.category}>
-                <PopupMenu icon={ellipsis} label="Pot" />
+                <PopupMenu icon={ellipsis} label="Budget" />
               </CardHeader>
               <h4>Maximum of ${item.maximum}</h4>
               <ProgressBarBudgets
@@ -114,6 +122,17 @@ export default function Budgets() {
               </GenericContainer>
             </div>
           ))}
+          <Modal
+            isOpen={openAdd}
+            onClose={() => setOpenAdd(false)}
+            title="Budget"
+            mode="Add"
+            categories={(budgetsData || []).map((b) => b.category)}
+            onSubmit={(data) => {
+              // for now just log; integrate with Supabase later
+              console.log("Add/Edit Budget submit:", data);
+            }}
+          />
         </div>
       </section>
     </section>

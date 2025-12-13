@@ -7,7 +7,7 @@ import DetailLabel from "../DetailsLabel";
 
 export default function OverviewBudgets() {
   const { budgetsData } = useContext(DataContext);
-  console.log("from component:", budgetsData);
+  // console.log("from component:", budgetsData);
   return (
     <div className="overviewBudgets">
       <PieChart budgets={budgetsData} />
