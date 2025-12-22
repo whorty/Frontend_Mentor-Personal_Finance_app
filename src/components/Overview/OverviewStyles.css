@@ -188,6 +188,7 @@ div.detailInfo {
 .overviewPots:focus,
 .overviewTransactions:focus,
 .overviewRecurring:focus {
+  -webkit-user-select: none;
   user-select: none;
 }
 

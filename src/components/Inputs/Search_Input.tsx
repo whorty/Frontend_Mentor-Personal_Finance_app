@@ -27,9 +27,11 @@ type CustomInput = {
   label?: string;
   onChange?: (option: string) => void;
   children: ReactNode;
+  title?: string;
   options?: string[];
   colorPicker?: boolean;
   colors?: ColorObject[];
+  value?: string;
 };
 
 const optionsdefault = [
@@ -68,8 +70,8 @@ export function Input_Select(props: CustomInput) {
       <div className="input-custom popup-container small" ref={menuRef}>
         <input
           type="text"
-          name={`search-${props.label}`}
-          id={`select-${props.label}`}
+          name={`Select-${props.title}`}
+          id={`Select-${props.title}`}
           value={selected}
           readOnly
           onClick={() => setOpen(!open)}
@@ -114,10 +116,10 @@ export function Input_Select_Themes(props: CustomInput) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  function handleSelect(opt: string) {
-    setSelected(opt);
+  function handleSelect(colorCode: string, colorName: string) {
+    setSelected(colorName);
     setOpen(false);
-    if (props.onChange) props.onChange(opt);
+    if (props.onChange) props.onChange(colorCode);
   }
 
   return (
@@ -126,12 +128,12 @@ export function Input_Select_Themes(props: CustomInput) {
       <div className="input-custom popup-container small" ref={menuRef}>
         <input
           type="text"
-          name={`search-${props.label}`}
-          id={`select-${props.label}`}
+          name={`search-colorPicker`}
+          id={`select-colorPicker`}
           value={selected}
           readOnly
           onClick={() => setOpen(!open)}
-          className=""
+          placeholder={selected}
         />
         <FaCaretDown className="" onClick={() => setOpen(!open)} />
         <div className="mobile" onClick={() => setOpen(!open)}>
@@ -149,7 +151,7 @@ export function Input_Select_Themes(props: CustomInput) {
                 className={`popup-item ${
                   option.name == selected ? "selected" : ""
                 }`}
-                onClick={() => handleSelect(option.name)}
+                onClick={() => handleSelect(option.colorCode, option.name)}
               >
                 {props.colorPicker && (
                   <div
@@ -165,5 +167,30 @@ export function Input_Select_Themes(props: CustomInput) {
         )}
       </div>
     </div>
+  );
+}
+
+export function Input_Text({
+  type,
+  value,
+  name,
+  onChange,
+  placeholder,
+}: {
+  type: string;
+  value?: string;
+  name?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+}) {
+  return (
+    <input
+      type={type}
+      id={name}
+      placeholder={placeholder || ""}
+      value={value || ""}
+      onChange={onChange}
+      autoComplete="off"
+    />
   );
 }

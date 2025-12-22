@@ -37,6 +37,7 @@ export interface PromiseVal {
   potsData: Total[];
   transactionsData: Transaction[] | null;
   budgetsData: TypeBudgets[] | null;
+  refetchBudgets?: () => Promise<void>;
 }
 
 export const DataContext = React.createContext<PromiseVal>({

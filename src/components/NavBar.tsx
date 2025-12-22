@@ -9,22 +9,15 @@ export default function NavBar() {
   const { pathname } = useLocation();
   // console.log(pathname);
   const menuItems = [
-    { name: "Overview" },
-    { name: "Transactions" },
-    { name: "Budgets" },
-    { name: "Pots" },
-    { name: "RecurringBills" },
+    { name: "Overview", route: "" },
+    { name: "Transactions", route: "transactions" },
+    { name: "Budgets", route: "budgets" },
+    { name: "Pots", route: "pots" },
+    { name: "RecurringBills", route: "recurringBills" },
   ];
   return (
     <nav className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}>
       <div className="logo">
-        {/* <Link to="/">
-          {isExpanded ? (
-            <img src={logoPathLarge} alt="Logo" />
-          ) : (
-            <img src={logoPathSmall} className="mini-logo" alt="Logo" />
-          )}
-        </Link> */}
         <Link to="/" className={`reveal ${isExpanded && "active"}`}>
           <img src={logoPathLarge} alt="Logo" />
         </Link>
@@ -32,10 +25,15 @@ export default function NavBar() {
       <ul className={`menu ${isExpanded && "active"}`}>
         {menuItems.map((item, index) => (
           <li
-            className={`${pathname == "/" + item.name ? "PageActive" : ""}`}
+            className={`${
+              pathname == "/app/" + item.route ? "PageActive" : ""
+            }`}
             key={index}
           >
-            <NavLink to={`/${item.name}`} className="menu-item">
+            <NavLink
+              to={item.route == "overview" ? "/app" : `/app/${item.route}`}
+              className="menu-item"
+            >
               <span className="icon">
                 <img
                   src={`/images/icons/icon-nav-${item.name.toLowerCase()}.svg`}

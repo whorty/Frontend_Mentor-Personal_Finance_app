@@ -70,6 +70,10 @@
   background-color: #2a2927;
 }
 
+.ellipsis {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .pagination-container {
     gap: 0.5rem;
@@ -90,5 +94,11 @@
   .pagination-next,
   .pagination-prev {
     width: min-content;
+  }
+  .ellipsis {
+    display: block;
+  }
+  .pagination-btn.hide {
+    display: none;
   }
 }

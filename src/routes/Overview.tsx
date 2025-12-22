@@ -15,16 +15,16 @@ export default function Overview() {
         <CardInfo />
       </section>
       <div className="overview-section">
-        <GenericContainer name="Pots" route="/Pots">
+        <GenericContainer name="Pots" route="/app/pots">
           <OverviewPots />
         </GenericContainer>
-        <GenericContainer name="Budgets" route="/Budgets">
+        <GenericContainer name="Budgets" route="/app/budgets">
           <OverviewBudgets />
         </GenericContainer>
-        <GenericContainer name="Transactions" route="/Transactions">
+        <GenericContainer name="Transactions" route="/app/transactions">
           <OverviewTransactions />
         </GenericContainer>
-        <GenericContainer name="Recurring Bills" route="/RecurringBills">
+        <GenericContainer name="Recurring Bills" route="/app/recurringBills">
           <OverviewReBills />
         </GenericContainer>
       </div>

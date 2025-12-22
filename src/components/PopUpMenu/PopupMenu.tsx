@@ -4,9 +4,13 @@ import "./PopupMenu.css";
 export default function PopupMenu({
   icon,
   label,
+  onEdit,
+  onDelete,
 }: {
   icon: string;
   label: string;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -22,6 +26,16 @@ export default function PopupMenu({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleEdit = () => {
+    onEdit?.();
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
+    onDelete?.();
+    setOpen(false);
+  };
+
   return (
     <div className="popup-container" ref={menuRef}>
       <button className="popup-button" onClick={() => setOpen(!open)}>
@@ -30,13 +44,10 @@ export default function PopupMenu({
 
       {open && (
         <div className="popup-menu">
-          <button className="popup-item" onClick={() => alert("Edit clicked")}>
+          <button className="popup-item" onClick={handleEdit}>
             Edit {label}
           </button>
-          <button
-            className="popup-item delete"
-            onClick={() => alert("Delete clicked")}
-          >
+          <button className="popup-item delete" onClick={handleDelete}>
             Delete {label}
           </button>
         </div>

@@ -11,7 +11,6 @@
   place-items: center;
   box-sizing: content-box;
   z-index: 1;
-  /* overflow: hidden; */
 }
 
 .sidebar.collapsed {
@@ -33,41 +32,25 @@
   & > .menu .menu-item > span:last-child {
     font: var(--text-preset-3);
   }
-  /* & > .logo img {
-    width: 149px;
-  } */
-  & > .toggle,
-  .logo {
-    width: 100%;
-    max-width: 212px;
-  }
 }
 
 .logo {
   font-weight: bold;
   margin-top: var(--Spacing-500);
-}
-
-.mini-logo {
-  width: 18px;
+  place-self: start;
+  width: 100%;
+  overflow: hidden;
 }
 
 .reveal {
-  display: block;
-  width: 13.5px;
+  margin-left: 35px;
   height: auto;
-  overflow: hidden;
-  &.active {
-    animation: reveal 1s ease forwards;
+  img {
+    clip-path: inset(0 88.7% 0 0);
+    transition: clip-path 0.4s ease;
   }
-}
-
-@keyframes reveal {
-  from {
-    width: 14px; /* Start cropped */
-  }
-  to {
-    width: 100%; /* Final full width of the logo */
+  &.active img {
+    clip-path: inset(0 0 0 0);
   }
 }
 

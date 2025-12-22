@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 
 interface PaginationProps {
@@ -11,7 +12,6 @@ export default function Pagination({
   totalPages,
   onPageChange,
 }: PaginationProps) {
-  // Generate page numbers to display (1 to 10)
   const pageNumbers = Array.from(
     { length: Math.min(totalPages, 10) },
     (_, i) => i + 1
@@ -19,7 +19,6 @@ export default function Pagination({
 
   return (
     <div className="pagination-container">
-      {/* Previous Button */}
       <button
         className="pagination-btn pagination-prev"
         onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
@@ -29,22 +28,50 @@ export default function Pagination({
         <p className="desktop">Prev</p>
       </button>
 
-      {/* Page Numbers */}
       <div className="pagination-numbers">
-        {pageNumbers.map((page) => (
-          <button
-            key={page}
-            className={`pagination-btn ${
-              currentPage === page ? "pagination-active" : ""
-            }`}
-            onClick={() => onPageChange(page)}
-          >
-            {page}
-          </button>
-        ))}
+        {(() => {
+          const elems: JSX.Element[] = [];
+          let ellipsisInserted = false;
+          for (const page of pageNumbers) {
+            const isFirst = page === 1;
+            const isLast = page === totalPages;
+            const isCurrent = page === currentPage;
+            const hideClass = !isFirst && !isLast && !isCurrent ? "hide" : "";
+
+            elems.push(
+              <button
+                key={page}
+                className={`pagination-btn ${hideClass} ${
+                  isCurrent ? "pagination-active" : ""
+                }`}
+                onClick={() => onPageChange(page)}
+              >
+                {page}
+              </button>
+            );
+            if (
+              isCurrent &&
+              !ellipsisInserted &&
+              page < totalPages &&
+              totalPages > 3
+            ) {
+              ellipsisInserted = true;
+              elems.push(
+                <button
+                  key={`ellipsis-${page}`}
+                  className="pagination-btn ellipsis"
+                  style={{ fontSize: "1.1rem" }}
+                  aria-hidden
+                >
+                  ...
+                </button>
+              );
+            }
+          }
+          return elems;
+        })()}
       </div>
 
-      {/* Next Button */}
       <button
         className="pagination-btn pagination-next"
         onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}

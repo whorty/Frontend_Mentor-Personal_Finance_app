@@ -6,6 +6,7 @@ import Transactions from "./routes/Transactions";
 import Budgets from "./routes/Budgets";
 import Pots from "./routes/Pots";
 import RecurringBills from "./routes/RecurringBills";
+import Login from "./routes/Login";
 import {
   DataContext,
   type Balance,
@@ -19,6 +20,10 @@ import {
   fetchTransactions,
   fetchBudgets,
 } from "./utils/db";
+import SignUp from "./routes/SignUp";
+import Intro from "./routes/Intro";
+import AuthRequired from "./components/AuthRequired";
+import NotFound from "./routes/NotFound";
 
 export default function App() {
   const [BalanceData, setBalanceData] = useState<Balance[] | null>([]);
@@ -27,6 +32,12 @@ export default function App() {
     Transaction[] | null
   >([]);
   const [budgetsData, setBudgetsData] = useState<TypeBudgets[]>([]);
+
+  const loadBudgets = async () => {
+    const dataBudgets = await fetchBudgets();
+    setBudgetsData(dataBudgets);
+  };
+
   useEffect(() => {
     async function loadData() {
       const dataBalance = await fetchBalance();
@@ -49,18 +60,27 @@ export default function App() {
     potsData,
     transactionsData,
     budgetsData,
+    refetchBudgets: loadBudgets,
   };
   return (
     <BrowserRouter>
       <DataContext.Provider value={value}>
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="overview" element={<Overview />} />
-            <Route path="transactions" element={<Transactions />} />
-            <Route path="budgets" element={<Budgets />} />
-            <Route path="pots" element={<Pots />} />
-            <Route path="recurringBills" element={<RecurringBills />} />
+          <Route path="/" element={<Intro />}>
+            <Route index element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
           </Route>
+
+          <Route element={<AuthRequired />}>
+            <Route path="app" element={<Layout />}>
+              <Route index element={<Overview />} />
+              <Route path="transactions" element={<Transactions />} />
+              <Route path="budgets" element={<Budgets />} />
+              <Route path="pots" element={<Pots />} />
+              <Route path="recurringBills" element={<RecurringBills />} />
+            </Route>
+          </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </DataContext.Provider>
     </BrowserRouter>

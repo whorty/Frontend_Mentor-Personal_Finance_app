@@ -1,6 +1,10 @@
 import { useContext, useMemo, useState } from "react";
 import PieChart from "../components/Chart/PieChart";
-import { DataContext, type Transaction } from "../utils/DataContext";
+import {
+  DataContext,
+  type Transaction,
+  type TypeBudgets,
+} from "../utils/DataContext";
 import "../components/Budgets/BudgetsStyles.css";
 import DetailLabel, { SpendingSummaryExt } from "../components/DetailsLabel";
 import CardHeader from "../components/CardHeader";
@@ -11,11 +15,18 @@ import getLastest from "../utils/getLastest";
 import getLastThreeFromMap from "../utils/getLastThreeFromMap";
 import GenericContainer from "../components/GenericContainer";
 import TransactionsList from "../components/TransactionsList";
-import Modal from "../components/modals/modal";
+import Modal from "../components/modals/modal.tsx";
+import { addBudget, updateBudget, deleteBudget } from "../utils/db";
 
 export default function Budgets() {
-  const { budgetsData, transactionsData } = useContext(DataContext);
+  const { budgetsData, transactionsData, refetchBudgets } =
+    useContext(DataContext);
   const [openAdd, setOpenAdd] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedBudget, setSelectedBudget] = useState<TypeBudgets | null>(
+    null
+  );
   const totalSpentByCategory = useMemo(() => {
     if (!budgetsData || !transactionsData) return {} as Record<string, number>;
     const wanted = budgetsData.map((item) => item.category);
@@ -37,6 +48,28 @@ export default function Budgets() {
       Transaction[]
     >;
   }, [transactionsData]);
+  const availableCategories = useMemo(() => {
+    if (!transactionsData) return [] as string[];
+    const transCats = Array.from(
+      new Set(transactionsData.map((t) => t.category))
+    );
+    const budgetCats = new Set((budgetsData || []).map((b) => b.category));
+    return transCats.filter((c) => !budgetCats.has(c));
+  }, [transactionsData, budgetsData]);
+
+  const editableCategories = useMemo(() => {
+    if (!transactionsData || !selectedBudget) return [] as string[];
+    const transCats = Array.from(
+      new Set(transactionsData.map((t) => t.category))
+    );
+    // For edit mode: exclude budgets except the one being edited
+    const otherBudgetCats = new Set(
+      (budgetsData || [])
+        .filter((b) => b.id !== selectedBudget.id)
+        .map((b) => b.category)
+    );
+    return transCats.filter((c) => !otherBudgetCats.has(c));
+  }, [transactionsData, budgetsData, selectedBudget]);
   return (
     <section id="Budgets">
       <header>
@@ -48,6 +81,85 @@ export default function Budgets() {
         >
           + Add New Budget
         </button>
+        <Modal
+          isOpen={openAdd}
+          onClose={() => setOpenAdd(false)}
+          title="Budget"
+          mode="Add"
+          categories={availableCategories}
+          onSubmit={async (data) => {
+            const result = await addBudget(data);
+            if (result) {
+              console.log("Budget added successfully:", result);
+              await refetchBudgets?.();
+            } else {
+              console.error("Failed to add budget");
+            }
+          }}
+        />
+        <Modal
+          isOpen={openEdit}
+          onClose={() => {
+            setOpenEdit(false);
+            setSelectedBudget(null);
+          }}
+          title="Budget"
+          mode="Edit"
+          categories={editableCategories}
+          initialData={
+            selectedBudget
+              ? {
+                  category: selectedBudget.category,
+                  maximum: selectedBudget.maximum,
+                  theme: selectedBudget.theme,
+                }
+              : undefined
+          }
+          onSubmit={async (data) => {
+            if (
+              selectedBudget &&
+              data.category &&
+              data.maximum > 0 &&
+              data.theme
+            ) {
+              const result = await updateBudget(selectedBudget.id, {
+                category: data.category,
+                maximum: data.maximum,
+                theme: data.theme,
+              });
+              if (result) {
+                console.log("Budget updated successfully:", result);
+                await refetchBudgets?.();
+              } else {
+                console.error("Failed to update budget");
+              }
+            } else {
+              console.error("Invalid form data: all fields must be filled");
+            }
+          }}
+        />
+        <Modal
+          isOpen={openDelete}
+          title={`'${selectedBudget?.category || ""}'?`}
+          mode="Delete"
+          onClose={() => {
+            setOpenDelete(false);
+            setSelectedBudget(null);
+          }}
+          onSubmit={async () => {
+            if (selectedBudget) {
+              const success = await deleteBudget(selectedBudget.id);
+              if (success) {
+                console.log("Budget deleted successfully");
+                setOpenDelete(false);
+                setSelectedBudget(null);
+                await refetchBudgets?.();
+              } else {
+                console.error("Failed to delete budget");
+              }
+            }
+          }}
+        />
       </header>
       <section>
         <div id="Summary">
@@ -69,7 +181,18 @@ export default function Budgets() {
           {budgetsData?.map((item) => (
             <div className="cardinfo bg-white" key={item.category}>
               <CardHeader theme={item.theme} name={item.category}>
-                <PopupMenu icon={ellipsis} label="Budget" />
+                <PopupMenu
+                  icon={ellipsis}
+                  label="Budget"
+                  onEdit={() => {
+                    setSelectedBudget(item);
+                    setOpenEdit(true);
+                  }}
+                  onDelete={() => {
+                    setSelectedBudget(item);
+                    setOpenDelete(true);
+                  }}
+                />
               </CardHeader>
               <h4>Maximum of ${item.maximum}</h4>
               <ProgressBarBudgets
@@ -103,7 +226,10 @@ export default function Budgets() {
                   }}
                 />
               </div>
-              <GenericContainer name="Lastest Spending" route="/Transactions">
+              <GenericContainer
+                name="Lastest Spending"
+                route="/app/Transactions"
+              >
                 {
                   // use precomputed last-3 map for this category
                   (() => {
@@ -122,17 +248,6 @@ export default function Budgets() {
               </GenericContainer>
             </div>
           ))}
-          <Modal
-            isOpen={openAdd}
-            onClose={() => setOpenAdd(false)}
-            title="Budget"
-            mode="Add"
-            categories={(budgetsData || []).map((b) => b.category)}
-            onSubmit={(data) => {
-              // for now just log; integrate with Supabase later
-              console.log("Add/Edit Budget submit:", data);
-            }}
-          />
         </div>
       </section>
     </section>

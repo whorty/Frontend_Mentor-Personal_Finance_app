@@ -34,3 +34,19 @@
 .mobile {
   display: none;
 }
+
+form {
+  input {
+    font-size: var(--text-preset-4);
+  }
+  .input-default {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      border: 1px solid var(--Beige-500);
+      border-radius: 8px;
+      padding: 12px 14.5px 12px 14.5px;
+    }
+  }
+}

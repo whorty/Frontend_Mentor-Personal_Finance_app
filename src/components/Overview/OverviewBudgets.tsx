@@ -13,7 +13,7 @@ export default function OverviewBudgets() {
       <PieChart budgets={budgetsData} />
       {/* <BasicPie budgets={budgetsData} /> */}
       <div className="detailInfo">
-        {budgetsData?.map((item) => (
+        {budgetsData?.slice(0, 5).map((item) => (
           <DetailLabel item={item} key={item.id} />
         ))}
       </div>

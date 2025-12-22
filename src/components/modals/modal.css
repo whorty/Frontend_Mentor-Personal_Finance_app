@@ -57,6 +57,9 @@
 }
 .modal-actions {
   margin-top: 20px;
+  > .btn.grey {
+    color: var(--Grey-500);
+  }
 }
 .modal-actions .btn {
   width: 100%;
