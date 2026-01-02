@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import supabase from "../supabase-client";
 
 export function useAuth() {
-  const [user, setUser] = useState<any | null>(null);
-  const [session, setSession] = useState<any | null>(null);
+  const [user, setUser] = useState<unknown | null>(null);
+  const [session, setSession] = useState<unknown | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

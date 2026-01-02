@@ -4,6 +4,16 @@ type Generic = {
   id: number;
 };
 
+export type Summary = {
+  total_paid_bills: number;
+  total_due_soon: number;
+  total_upcoming: number;
+};
+
+export type sumTotal = {
+  grand_total: number;
+};
+
 export interface Transaction extends Generic {
   amount: number;
   avatar: string;
@@ -37,6 +47,8 @@ export interface PromiseVal {
   potsData: Total[];
   transactionsData: Transaction[] | null;
   budgetsData: TypeBudgets[] | null;
+  summaryBillsData: Summary[] | null;
+  grandTotal: sumTotal[];
   refetchBudgets?: () => Promise<void>;
 }
 
@@ -45,6 +57,8 @@ export const DataContext = React.createContext<PromiseVal>({
   potsData: [],
   transactionsData: [],
   budgetsData: [],
+  summaryBillsData: [],
+  grandTotal: [],
 });
 
 export const SORT_OPTIONS = {

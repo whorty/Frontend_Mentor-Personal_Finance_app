@@ -36,12 +36,9 @@
   }
   > .cardinfo {
     padding: 32px;
-    .overviewTransactions {
-      display: grid;
-      grid-template-columns: 1fr 1fr auto;
-      > div:first-child {
-        display: flex;
-      }
+    .overviewTransactions > div:first-child {
+      display: flex;
+      flex: 1;
     }
   }
   #inputs-bills {
@@ -59,6 +56,16 @@
   }
   #headings {
     color: var(--Grey-500);
+    > h5:first-of-type {
+      flex: 1;
+    }
+    > h5 {
+      flex-basis: 30%;
+    }
+    > h5:last-of-type {
+      flex-basis: 100px;
+      text-align: end;
+    }
   }
   .overviewTransactions {
     padding-right: 1rem;
@@ -73,9 +80,29 @@
 .due-date {
   display: flex;
   align-items: center;
-  svg {
-    margin-left: 8px;
+  flex-basis: 30%;
+  color: var(--Grey-500);
+  &.paid {
+    color: var(--Green);
   }
+  svg {
+    --size: 0.8rem;
+    margin-left: 8px;
+    font-size: var(--size);
+  }
+  .bigger-font {
+    color: var(--Red);
+    font-size: calc(var(--size) + 0.2rem);
+  }
+}
+
+#Recurring .overviewTransactions .minus {
+  flex-basis: 100px;
+  text-align: end;
+}
+
+.minus.due {
+  color: var(--Red);
 }
 
 .black-card {
@@ -122,6 +149,7 @@
       font-size: 20px;
     }
     > .cardinfo .overviewTransactions {
+      display: grid;
       grid-template-columns: 1fr auto;
       row-gap: 8px;
       > div:first-child {

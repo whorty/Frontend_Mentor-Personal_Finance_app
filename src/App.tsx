@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "./hooks/useAuth";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Overview from "./routes/Overview";
@@ -13,12 +14,16 @@ import {
   type Total,
   type Transaction,
   type TypeBudgets,
+  type Summary,
+  type sumTotal,
 } from "./utils/DataContext";
 import {
   fetchBalance,
   fetchPots,
   fetchTransactions,
   fetchBudgets,
+  fetchSummaryBills,
+  fetchGrandTotal,
 } from "./utils/db";
 import SignUp from "./routes/SignUp";
 import Intro from "./routes/Intro";
@@ -32,34 +37,65 @@ export default function App() {
     Transaction[] | null
   >([]);
   const [budgetsData, setBudgetsData] = useState<TypeBudgets[]>([]);
+  const [summaryBillsData, SetSummaryBillsData] = useState<Summary[] | null>(
+    []
+  );
+  const [grandTotal, SetGrandTotal] = useState<sumTotal[]>([]);
 
   const loadBudgets = async () => {
     const dataBudgets = await fetchBudgets();
-    setBudgetsData(dataBudgets);
+    setBudgetsData(dataBudgets ?? []);
   };
-
+  const { session } = useAuth();
   useEffect(() => {
     async function loadData() {
-      const dataBalance = await fetchBalance();
-      const dataPots = await fetchPots();
-      const dataTransaction = await fetchTransactions();
-      const dataBudgets = await fetchBudgets();
-      setBalanceData(dataBalance);
-      setPotsData(dataPots);
-      setTransactionsData(dataTransaction);
-      setBudgetsData(dataBudgets);
+      try {
+        const [
+          dataBalance,
+          dataPots,
+          dataTransaction,
+          dataBudgets,
+          dataSummaryBill,
+          dataGrandTotal,
+        ] = await Promise.all([
+          fetchBalance(),
+          fetchPots(),
+          fetchTransactions(),
+          fetchBudgets(),
+          fetchSummaryBills(),
+          fetchGrandTotal(),
+        ]);
+
+        setBalanceData(dataBalance);
+        setPotsData(dataPots);
+        setTransactionsData(dataTransaction);
+        setBudgetsData(dataBudgets ?? []);
+        SetSummaryBillsData(dataSummaryBill);
+        SetGrandTotal(dataGrandTotal);
+      } catch (e) {
+        console.error("Failed to load data:", e);
+      }
     }
-    loadData();
-  }, []);
-  // console.log("balanceData:", BalanceData);
-  // console.log("PotData:", dataPots);
-  // console.log("TransactionData:", transactionsData);
-  // console.log("BudgetsData:", budgetsData);
+
+    if (session) {
+      loadData();
+    } else {
+      setBalanceData([]);
+      setPotsData([]);
+      setTransactionsData([]);
+      setBudgetsData([]);
+      SetSummaryBillsData([]);
+      SetGrandTotal([]);
+    }
+  }, [session]);
+  console.log(BalanceData);
   const value = {
     BalanceData,
     potsData,
     transactionsData,
     budgetsData,
+    summaryBillsData,
+    grandTotal,
     refetchBudgets: loadBudgets,
   };
   return (

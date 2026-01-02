@@ -19,7 +19,7 @@ import Modal from "../components/modals/modal.tsx";
 import { addBudget, updateBudget, deleteBudget } from "../utils/db";
 
 export default function Budgets() {
-  const { budgetsData, transactionsData, refetchBudgets } =
+  const { budgetsData, transactionsData, refetchBudgets, grandTotal } =
     useContext(DataContext);
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -164,7 +164,10 @@ export default function Budgets() {
       <section>
         <div id="Summary">
           <div className="generic">
-            <PieChart budgets={budgetsData} />
+            <PieChart
+              budgets={budgetsData}
+              grandT={grandTotal[0]?.grand_total}
+            />
             <div className="spending-summary">
               <h2>Spending Summary</h2>
               {budgetsData?.map((item) => (

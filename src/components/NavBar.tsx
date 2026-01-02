@@ -1,12 +1,13 @@
 import { useState } from "react";
 import "../styles/navbar.css";
-import { Link, NavLink, useLocation } from "react-router-dom";
-// import logoPathSmall from "../assets/images/logo-small.svg";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import supabase from "../supabase-client";
 import logoPathLarge from "/src/assets/logos/logo-large.svg";
 
 export default function NavBar() {
   const [isExpanded, setIsExpanded] = useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   // console.log(pathname);
   const menuItems = [
     { name: "Overview", route: "" },
@@ -15,10 +16,24 @@ export default function NavBar() {
     { name: "Pots", route: "pots" },
     { name: "RecurringBills", route: "recurringBills" },
   ];
+  async function sessionOut(e: React.MouseEvent) {
+    e.preventDefault();
+    try {
+      await supabase.auth.signOut();
+    } catch (err) {
+      console.error("Error signing out:", err);
+    }
+    navigate("/");
+  }
+
   return (
     <nav className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}>
       <div className="logo">
-        <Link to="/" className={`reveal ${isExpanded && "active"}`}>
+        <Link
+          to="/"
+          onClick={sessionOut}
+          className={`reveal ${isExpanded && "active"}`}
+        >
           <img src={logoPathLarge} alt="Logo" />
         </Link>
       </div>

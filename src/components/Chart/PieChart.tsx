@@ -3,16 +3,17 @@ import "./chart.css";
 
 type PieChart = {
   budgets: TypeBudgets[] | null;
+  grandT: number;
 };
 
-export default function PieChart({ budgets }: PieChart) {
+export default function PieChart({ budgets, grandT }: PieChart) {
   if (!budgets || budgets.length === 0) return <p>No budget data.</p>;
   const total = budgets.reduce(
     (sum: number, b: { maximum: number }) => sum + b.maximum,
     0
   );
   // console.log(total);
-  const spent = 338;
+  const spent = grandT;
   // console.log("from chart:", budgets);
   // const percentUsed = (spent / totalLimit) * 100;
 

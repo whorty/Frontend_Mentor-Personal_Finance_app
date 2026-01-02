@@ -46,17 +46,23 @@ export async function fetchPots() {
 }
 
 export async function fetchBudgets() {
-  try {
-    const { data, error } = await supabase
-      .from("Personal_Finance _App-Budgets")
-      .select();
-    if (error) {
-      throw new Error("Error fetching data for budgets:", error);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) {
+    try {
+      const { data, error } = await supabase
+        .from("Personal_Finance _App-Budgets")
+        .select()
+        .eq("user_id", user.id);
+      if (error) {
+        throw new Error("Error fetching data for budgets:", error);
+      }
+      return data;
+    } catch (e) {
+      console.error("Error:", e);
+      return [];
     }
-    return data;
-  } catch (e) {
-    console.error("Error:", e);
-    return [];
   }
 }
 
@@ -117,5 +123,31 @@ export async function deleteBudget(id: number) {
   } catch (e) {
     console.error("Error:", e);
     return false;
+  }
+}
+
+export async function fetchSummaryBills() {
+  try {
+    const { data, error } = await supabase.from("finance_summary").select();
+    if (error) {
+      throw new Error("Error fetching data for finance_summary:", error);
+    }
+    return data;
+  } catch (e) {
+    console.error("Error:", e);
+    return [];
+  }
+}
+
+export async function fetchGrandTotal() {
+  try {
+    const { data, error } = await supabase.from("view_grand_total").select();
+    if (error) {
+      throw new Error("Error fetching data for view_grand_total:", error);
+    }
+    return data;
+  } catch (e) {
+    console.error("Error:", e);
+    return [];
   }
 }
