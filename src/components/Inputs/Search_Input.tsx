@@ -176,21 +176,30 @@ export function Input_Text({
   name,
   onChange,
   placeholder,
+  maxlength,
+  validationWarning,
 }: {
   type: string;
-  value?: string;
-  name?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  name: string;
+  maxlength?: number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
+  validationWarning?: boolean;
 }) {
+  const remainingChars = maxlength ? maxlength - value.length : 0;
   return (
-    <input
-      type={type}
-      id={name}
-      placeholder={placeholder || ""}
-      value={value || ""}
-      onChange={onChange}
-      autoComplete="off"
-    />
+    <>
+      <input
+        type={type}
+        id={name}
+        placeholder={placeholder || ""}
+        value={value || ""}
+        onChange={onChange}
+        autoComplete="off"
+        maxLength={maxlength}
+      />
+      {validationWarning && <p>{remainingChars} characters left</p>}
+    </>
   );
 }

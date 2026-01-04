@@ -34,6 +34,8 @@ export interface Total extends Generic {
   target: number;
   total: number;
   theme: string;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 export interface TypeBudgets extends Generic {
@@ -45,18 +47,22 @@ export interface TypeBudgets extends Generic {
 export interface PromiseVal {
   BalanceData: Balance[] | null;
   potsData: Total[];
+  setPotsData?: React.Dispatch<React.SetStateAction<Total[]>>;
   transactionsData: Transaction[] | null;
-  budgetsData: TypeBudgets[] | null;
+  budgetsData: TypeBudgets[];
+  setBudgetsData?: React.Dispatch<React.SetStateAction<TypeBudgets[]>>;
   summaryBillsData: Summary[] | null;
   grandTotal: sumTotal[];
-  refetchBudgets?: () => Promise<void>;
+  // refetchBudgets?: () => Promise<void>;
 }
 
 export const DataContext = React.createContext<PromiseVal>({
   BalanceData: null,
   potsData: [],
+  setPotsData: undefined,
   transactionsData: [],
   budgetsData: [],
+  setBudgetsData: undefined,
   summaryBillsData: [],
   grandTotal: [],
 });

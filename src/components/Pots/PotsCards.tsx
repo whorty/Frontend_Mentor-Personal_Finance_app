@@ -10,7 +10,12 @@ export default function PotsCards(props: Total) {
   return (
     <div className="cardinfo bg-white">
       <CardHeader {...props}>
-        <PopupMenu icon={ellipsis} label="Pot" />
+        <PopupMenu
+          icon={ellipsis}
+          label="Pot"
+          onEdit={() => props.onEdit?.()}
+          onDelete={() => props.onDelete?.()}
+        />
       </CardHeader>
       <div className="potCard-barPercent">
         <div className="potCard-info">

@@ -52,7 +52,7 @@ export async function fetchBudgets() {
   if (user) {
     try {
       const { data, error } = await supabase
-        .from("Personal_Finance _App-Budgets")
+        .from("Personal_Finance_App-Budgets")
         .select()
         .eq("user_id", user.id);
       if (error) {
@@ -73,7 +73,7 @@ export async function addBudget(budgetData: {
 }) {
   try {
     const { data, error } = await supabase
-      .from("Personal_Finance _App-Budgets")
+      .from("Personal_Finance_App-Budgets")
       .insert([budgetData])
       .select();
     if (error) {
@@ -96,7 +96,7 @@ export async function updateBudget(
 ) {
   try {
     const { data, error } = await supabase
-      .from("Personal_Finance _App-Budgets")
+      .from("Personal_Finance_App-Budgets")
       .update(budgetData)
       .eq("id", id)
       .select();
@@ -113,11 +113,67 @@ export async function updateBudget(
 export async function deleteBudget(id: number) {
   try {
     const { error } = await supabase
-      .from("Personal_Finance _App-Budgets")
+      .from("Personal_Finance_App-Budgets")
       .delete()
       .eq("id", id);
     if (error) {
       throw new Error("Error deleting budget:", error);
+    }
+    return true;
+  } catch (e) {
+    console.error("Error:", e);
+    return false;
+  }
+}
+
+export interface PotData {
+  name: string;
+  target: number;
+  theme: string;
+}
+
+export async function addPot(PotData: PotData) {
+  try {
+    console.log("try:", PotData);
+    const { data, error } = await supabase
+      .from("Personal_Finance_App-Pots")
+      .insert([PotData])
+      .select();
+    if (error) {
+      throw new Error("Error adding Pot:", error);
+    }
+    return data;
+  } catch (e) {
+    console.error("Error:", e);
+    return null;
+  }
+}
+
+export async function updatePot(id: number, PotData: PotData) {
+  try {
+    const { data, error } = await supabase
+      .from("Personal_Finance_App-Pots")
+      .update(PotData)
+      .eq("id", id)
+      .select();
+    if (error) {
+      throw new Error("Error updating Pot:", error);
+    }
+    return data;
+  } catch (e) {
+    console.error("Error:", e);
+    return null;
+  }
+}
+
+export async function deletePot(id: number) {
+  try {
+    const { error } = await supabase
+      .from("Personal_Finance_App-Pots")
+      .delete()
+      .eq("id", id);
+    if (error) {
+      throw new Error("Error deleting Pot:", error);
     }
     return true;
   } catch (e) {

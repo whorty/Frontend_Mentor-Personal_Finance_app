@@ -19,7 +19,7 @@ import Modal from "../components/modals/modal.tsx";
 import { addBudget, updateBudget, deleteBudget } from "../utils/db";
 
 export default function Budgets() {
-  const { budgetsData, transactionsData, refetchBudgets, grandTotal } =
+  const { budgetsData, transactionsData, setBudgetsData, grandTotal } =
     useContext(DataContext);
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -89,9 +89,11 @@ export default function Budgets() {
           categories={availableCategories}
           onSubmit={async (data) => {
             const result = await addBudget(data);
-            if (result) {
+            console.log("add:", result, setBudgetsData, budgetsData);
+            if (result && setBudgetsData) {
               console.log("Budget added successfully:", result);
-              await refetchBudgets?.();
+              // await refetchBudgets?.();
+              setBudgetsData([...budgetsData, ...result]);
             } else {
               console.error("Failed to add budget");
             }
@@ -127,9 +129,15 @@ export default function Budgets() {
                 maximum: data.maximum,
                 theme: data.theme,
               });
-              if (result) {
+              if (result && setBudgetsData) {
                 console.log("Budget updated successfully:", result);
-                await refetchBudgets?.();
+                setBudgetsData((prevBudgets) =>
+                  prevBudgets.map((Budget) =>
+                    Budget.id === selectedBudget.id
+                      ? { ...Budget, ...result[0] }
+                      : Budget
+                  )
+                );
               } else {
                 console.error("Failed to update budget");
               }
@@ -149,11 +157,15 @@ export default function Budgets() {
           onSubmit={async () => {
             if (selectedBudget) {
               const success = await deleteBudget(selectedBudget.id);
-              if (success) {
+              if (success && setBudgetsData) {
                 console.log("Budget deleted successfully");
                 setOpenDelete(false);
                 setSelectedBudget(null);
-                await refetchBudgets?.();
+                setBudgetsData((preBudgetsData) =>
+                  preBudgetsData.filter(
+                    (Budget) => Budget.id !== selectedBudget.id
+                  )
+                );
               } else {
                 console.error("Failed to delete budget");
               }

@@ -42,10 +42,10 @@ export default function App() {
   );
   const [grandTotal, SetGrandTotal] = useState<sumTotal[]>([]);
 
-  const loadBudgets = async () => {
-    const dataBudgets = await fetchBudgets();
-    setBudgetsData(dataBudgets ?? []);
-  };
+  // const loadBudgets = async () => {
+  //   const dataBudgets = await fetchBudgets();
+  //   setBudgetsData(dataBudgets ?? []);
+  // };
   const { session } = useAuth();
   useEffect(() => {
     async function loadData() {
@@ -76,28 +76,36 @@ export default function App() {
         console.error("Failed to load data:", e);
       }
     }
-
-    if (session) {
-      loadData();
-    } else {
-      setBalanceData([]);
-      setPotsData([]);
-      setTransactionsData([]);
-      setBudgetsData([]);
-      SetSummaryBillsData([]);
-      SetGrandTotal([]);
-    }
+    loadData();
+    // if (session) {
+    //   loadData();
+    // } else {
+    //   setBalanceData([]);
+    //   setPotsData([]);
+    //   setTransactionsData([]);
+    //   setBudgetsData([]);
+    //   SetSummaryBillsData([]);
+    //   SetGrandTotal([]);
+    // }
   }, [session]);
-  console.log(BalanceData);
   const value = {
     BalanceData,
     potsData,
+    setPotsData,
     transactionsData,
     budgetsData,
+    setBudgetsData,
     summaryBillsData,
     grandTotal,
-    refetchBudgets: loadBudgets,
+    // refetchBudgets: loadBudgets,
   };
+
+  // useEffect(() => {
+  //   console.count("BalanceData log");
+  //   // Resto del código...
+  // }, []);
+  console.count("render");
+
   return (
     <BrowserRouter>
       <DataContext.Provider value={value}>
