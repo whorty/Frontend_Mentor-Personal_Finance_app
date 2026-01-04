@@ -41,11 +41,6 @@ export default function App() {
     []
   );
   const [grandTotal, SetGrandTotal] = useState<sumTotal[]>([]);
-
-  // const loadBudgets = async () => {
-  //   const dataBudgets = await fetchBudgets();
-  //   setBudgetsData(dataBudgets ?? []);
-  // };
   const { session } = useAuth();
   useEffect(() => {
     async function loadData() {
@@ -77,16 +72,16 @@ export default function App() {
       }
     }
     loadData();
-    // if (session) {
-    //   loadData();
-    // } else {
-    //   setBalanceData([]);
-    //   setPotsData([]);
-    //   setTransactionsData([]);
-    //   setBudgetsData([]);
-    //   SetSummaryBillsData([]);
-    //   SetGrandTotal([]);
-    // }
+    if (session) {
+      loadData();
+    } else {
+      setBalanceData([]);
+      setPotsData([]);
+      setTransactionsData([]);
+      setBudgetsData([]);
+      SetSummaryBillsData([]);
+      SetGrandTotal([]);
+    }
   }, [session]);
   const value = {
     BalanceData,
@@ -97,14 +92,13 @@ export default function App() {
     setBudgetsData,
     summaryBillsData,
     grandTotal,
-    // refetchBudgets: loadBudgets,
   };
 
   // useEffect(() => {
   //   console.count("BalanceData log");
   //   // Resto del código...
   // }, []);
-  console.count("render");
+  // console.count("render");
 
   return (
     <BrowserRouter>

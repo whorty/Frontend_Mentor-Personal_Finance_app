@@ -1,12 +1,13 @@
 // import React from "react";
 import ellipsis from "/images/icons/icon-ellipsis.svg";
-import type { Total } from "../../utils/DataContext";
+import { type Total } from "../../utils/DataContext";
 import { calcPercentage } from "../../utils/math";
 import CardHeader from "../CardHeader";
 import PopupMenu from "../PopUpMenu/PopupMenu";
 import { ProgressBarPots } from "../progressBar/ProgressBar";
 
 export default function PotsCards(props: Total) {
+  console.log(props);
   return (
     <div className="cardinfo bg-white">
       <CardHeader {...props}>

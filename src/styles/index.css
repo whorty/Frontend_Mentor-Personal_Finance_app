@@ -289,7 +289,8 @@ section > header {
         display: inherit;
         flex-direction: inherit;
         row-gap: 1rem;
-        label {
+        label,
+        .pass-requirements {
           display: block;
           font: var(--text-preset-5);
           color: var(--Grey-500);
@@ -298,6 +299,10 @@ section > header {
         .pass-requirements {
           text-align: right;
           display: block;
+          margin-top: 4px;
+        }
+        .btn {
+          min-height: 53px;
         }
       }
       h4 {

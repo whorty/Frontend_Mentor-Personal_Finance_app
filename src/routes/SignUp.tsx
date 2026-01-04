@@ -74,8 +74,9 @@ export default function SignUp() {
         )}
         <form className="form" onSubmit={handleSignUp}>
           <div className="input-default">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="Name">Name</label>
             <Input_Text
+              name="Name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -85,6 +86,7 @@ export default function SignUp() {
           <div className="input-default">
             <label htmlFor="Email">Email</label>
             <Input_Text
+              name="Email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -92,19 +94,20 @@ export default function SignUp() {
             />
           </div>
           <div className="input-default">
-            <label htmlFor="CreatePassword">Create Password</label>
+            <label htmlFor="Password">Create Password</label>
             <Input_Text
+              name="Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="At least 8 characters"
             />
-            <label htmlFor="" className="pass-requirements">
+            <p className="pass-requirements">
               Passwords must be at least 8 characters
-            </label>
+            </p>
           </div>
           <button type="submit" className="btn bg-black" disabled={loading}>
-            {loading ? "Creating Account..." : "Sign Up"}
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
         <h4>
