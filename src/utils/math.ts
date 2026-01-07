@@ -1,3 +1,4 @@
 export const calcPercentage = (a: number, b: number): string => {
-  return Math.min(Math.round((a / b) * 100), 100).toFixed(1);
+  if (a <= 0) a = 0;
+  return Math.min((a / b) * 100, 100).toFixed(1);
 };

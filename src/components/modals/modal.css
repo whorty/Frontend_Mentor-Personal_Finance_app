@@ -75,6 +75,7 @@
 
 .modal-form .input-custom:has(input[id^="target-"]) {
   grid-template-columns: auto 1fr;
+  align-items: normal;
 }
 
 input[id^="target-"] + svg {
@@ -83,7 +84,47 @@ input[id^="target-"] + svg {
   grid-row-start: 1;
 }
 
-/* small responsive tweak */
+.bar-form {
+  .potCard-barPercent {
+    margin-bottom: 30.5px;
+  }
+  .progress-bar {
+    display: flex;
+    column-gap: 2px;
+    .progress-fill.bar-default {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+    .progress-fill.Add,
+    .progress-fill.withdraw {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+    .progress-fill.withdraw.fullwithdraw {
+      border-radius: 4px;
+    }
+  }
+  .potCard-info {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    h4,
+    h5:last-child {
+      color: var(--Grey-500);
+    }
+    h5.Add {
+      color: var(--Green);
+    }
+    h5.withdraw {
+      color: var(--Red);
+    }
+    &:first-child {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
 @media (max-width: 600px) {
   .modal-container {
     width: 90%;

@@ -32,6 +32,7 @@ type CustomInput = {
   colorPicker?: boolean;
   colors?: ColorObject[];
   value?: string;
+  mode?: string;
 };
 
 const optionsdefault = [
@@ -45,9 +46,14 @@ const optionsdefault = [
 export function Input_Select(props: CustomInput) {
   const optionsToUse = props.options || optionsdefault;
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<string>(optionsToUse[0]);
+  let index;
+  if (props.value != undefined) {
+    index = optionsToUse.indexOf(props.value);
+  }
+  const [selected, setSelected] = useState<string>(
+    index == undefined ? optionsToUse[0] : optionsToUse[index]
+  );
   const menuRef = useRef<HTMLDivElement | null>(null);
-
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -102,8 +108,14 @@ export function Input_Select(props: CustomInput) {
 export function Input_Select_Themes(props: CustomInput) {
   // const nameOfColors = props.colors?.map((color) => color.name);
   const optionsToUse = props.colors || [];
+  const index =
+    props.value != ""
+      ? optionsToUse.findIndex((color) => color.colorCode === props.value)
+      : 0;
+  const initialSelected =
+    index >= 0 ? optionsToUse[index].name : optionsToUse[0].name;
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<string>(optionsToUse[0].name);
+  const [selected, setSelected] = useState<string>(initialSelected);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

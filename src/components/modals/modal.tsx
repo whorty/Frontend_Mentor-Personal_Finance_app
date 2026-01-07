@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./modal.css";
 import {
   Input_Select,
@@ -78,9 +78,14 @@ export default function Modal(props: ModalProps) {
   const [category, setCategory] = useState<string>(
     props.initialData?.category ?? categories[0] ?? ""
   );
-  const [maximum, setMaximum] = useState<number>(
-    props.initialData?.maximum ?? 0
-  );
+  useEffect(() => {
+    if (props.initialData?.maximum !== undefined) {
+      setMaximum(props.initialData.maximum);
+    }
+  }, [props.initialData]);
+  const [maximum, setMaximum] = useState<number>(0);
+  console.count("try:");
+  console.log(0);
   const [theme, setTheme] = useState<string>(getInitialTheme());
 
   // close on Escape
@@ -141,7 +146,8 @@ export default function Modal(props: ModalProps) {
             <Input_Select
               options={categories}
               title={title}
-              value={category}
+              mode="Edit"
+              value={mode == "Edit" ? props.initialData?.category : category}
               onChange={(v) => setCategory(v)}
             >
               <PiSortAscendingFill />
@@ -156,7 +162,8 @@ export default function Modal(props: ModalProps) {
                   type="number"
                   id={`MaximumSpend-${title}`}
                   name="maximum-spend"
-                  value={maximum}
+                  value={mode == "Edit" ? maximum : undefined}
+                  placeholder="0"
                   onChange={(e) => setMaximum(Number(e.target.value))}
                   min={0}
                 />
@@ -167,6 +174,7 @@ export default function Modal(props: ModalProps) {
               colors={colors}
               onChange={(v) => setTheme(v)}
               colorPicker={true}
+              value={mode == "Edit" ? props.initialData?.theme : ""}
             >
               <PiSortAscendingFill />
             </Input_Select_Themes>

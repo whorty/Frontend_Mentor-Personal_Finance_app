@@ -149,7 +149,10 @@ export async function addPot(PotData: PotData) {
   }
 }
 
-export async function updatePot(id: number, PotData: PotData) {
+export async function updatePot(
+  id: number,
+  PotData: PotData | { total: number }
+) {
   try {
     const { data, error } = await supabase
       .from("Personal_Finance_App-Pots")

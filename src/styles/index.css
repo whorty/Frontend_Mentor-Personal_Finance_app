@@ -107,6 +107,7 @@ button {
   background-color: transparent;
   &:hover {
     cursor: pointer;
+    opacity: 0.8;
   }
 }
 
@@ -213,6 +214,10 @@ section > header {
 .btn {
   border-radius: 8px;
   padding: 16px;
+  &:hover {
+    box-shadow: 0 6.4px 14.4px 0 var(--Grey-100),
+      0 1.2px 3.6px 0 var(--Grey-300);
+  }
 }
 
 .bg-black {
