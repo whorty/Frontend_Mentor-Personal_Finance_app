@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useMemo } from "react";
 import PieChart from "../components/Chart/PieChart";
 import {
   DataContext,
@@ -17,16 +17,22 @@ import GenericContainer from "../components/GenericContainer";
 import TransactionsList from "../components/TransactionsList";
 import Modal from "../components/modals/modal.tsx";
 import { addBudget, updateBudget, deleteBudget } from "../utils/db";
+import { useModal } from "../components/modals/useModal.ts";
 
 export default function Budgets() {
   const { budgetsData, transactionsData, setBudgetsData, grandTotal } =
     useContext(DataContext);
-  const [openAdd, setOpenAdd] = useState(false);
-  const [openEdit, setOpenEdit] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
-  const [selectedBudget, setSelectedBudget] = useState<TypeBudgets | null>(
-    null
-  );
+
+  const {
+    mode,
+    selected: selectedBudget,
+    isOpen,
+    openAdd,
+    openEdit,
+    openDelete,
+    close,
+  } = useModal<TypeBudgets>();
+
   const totalSpentByCategory = useMemo(() => {
     if (!budgetsData || !transactionsData) return {} as Record<string, number>;
     const wanted = budgetsData.map((item) => item.category);
@@ -48,6 +54,7 @@ export default function Budgets() {
       Transaction[]
     >;
   }, [transactionsData]);
+
   const availableCategories = useMemo(() => {
     if (!transactionsData) return [] as string[];
     const transCats = Array.from(
@@ -70,108 +77,69 @@ export default function Budgets() {
     );
     return transCats.filter((c) => !otherBudgetCats.has(c));
   }, [transactionsData, budgetsData, selectedBudget]);
+
+  const initialData = useMemo(() => {
+    if (!selectedBudget) return undefined;
+    return {
+      category: selectedBudget.category,
+      maximum: selectedBudget.maximum,
+      theme: selectedBudget.theme,
+    };
+  }, [selectedBudget]);
+
   return (
     <section id="Budgets">
-      <header>
-        <h1>Budgets</h1>
-        <button
-          className="btn bg-black"
-          id="Add_New-Budget"
-          onClick={() => setOpenAdd(true)}
-        >
-          + Add New Budget
-        </button>
+      {isOpen && (
         <Modal
-          isOpen={openAdd}
-          onClose={() => setOpenAdd(false)}
-          title="Budget"
-          mode="Add"
-          categories={availableCategories}
-          onSubmit={async (data) => {
-            const result = await addBudget(data);
-            console.log("add:", result, setBudgetsData, budgetsData);
-            if (result && setBudgetsData) {
-              console.log("Budget added successfully:", result);
-              // await refetchBudgets?.();
-              setBudgetsData([...budgetsData, ...result]);
-            } else {
-              console.error("Failed to add budget");
-            }
-          }}
-        />
-        <Modal
-          isOpen={openEdit}
-          onClose={() => {
-            setOpenEdit(false);
-            setSelectedBudget(null);
-          }}
-          title="Budget"
-          mode="Edit"
-          categories={editableCategories}
-          initialData={
-            selectedBudget
-              ? {
-                  category: selectedBudget.category,
-                  maximum: selectedBudget.maximum,
-                  theme: selectedBudget.theme,
-                }
+          isOpen={true}
+          title={
+            mode == "Delete" ? "‘" + selectedBudget!.category + "’?" : "Budget"
+          }
+          mode={mode!}
+          categories={
+            mode === "Add"
+              ? availableCategories
+              : mode === "Edit"
+              ? editableCategories
               : undefined
           }
+          initialData={
+            mode === "Edit" && selectedBudget ? initialData : undefined
+          }
+          onClose={close}
           onSubmit={async (data) => {
-            if (
-              selectedBudget &&
-              data.category &&
-              data.maximum > 0 &&
-              data.theme
-            ) {
-              const result = await updateBudget(selectedBudget.id, {
-                category: data.category,
-                maximum: data.maximum,
-                theme: data.theme,
-              });
-              if (result && setBudgetsData) {
-                console.log("Budget updated successfully:", result);
-                setBudgetsData((prevBudgets) =>
-                  prevBudgets.map((Budget) =>
-                    Budget.id === selectedBudget.id
-                      ? { ...Budget, ...result[0] }
-                      : Budget
+            if (mode === "Add") {
+              const result = await addBudget(data);
+              if (result && setBudgetsData)
+                setBudgetsData((prev) => [...prev, ...result]);
+            }
+
+            if (mode === "Edit" && selectedBudget) {
+              const result = await updateBudget(selectedBudget.id, data);
+              if (result && setBudgetsData)
+                setBudgetsData((prev) =>
+                  prev.map((b) =>
+                    b.id === selectedBudget.id ? { ...b, ...result[0] } : b
                   )
                 );
-              } else {
-                console.error("Failed to update budget");
-              }
-            } else {
-              console.error("Invalid form data: all fields must be filled");
             }
+
+            if (mode === "Delete" && selectedBudget && setBudgetsData) {
+              await deleteBudget(selectedBudget.id);
+              setBudgetsData((prev) =>
+                prev.filter((b) => b.id !== selectedBudget.id)
+              );
+            }
+
+            close();
           }}
         />
-        <Modal
-          isOpen={openDelete}
-          title={`'${selectedBudget?.category || ""}'?`}
-          mode="Delete"
-          onClose={() => {
-            setOpenDelete(false);
-            setSelectedBudget(null);
-          }}
-          onSubmit={async () => {
-            if (selectedBudget) {
-              const success = await deleteBudget(selectedBudget.id);
-              if (success && setBudgetsData) {
-                console.log("Budget deleted successfully");
-                setOpenDelete(false);
-                setSelectedBudget(null);
-                setBudgetsData((preBudgetsData) =>
-                  preBudgetsData.filter(
-                    (Budget) => Budget.id !== selectedBudget.id
-                  )
-                );
-              } else {
-                console.error("Failed to delete budget");
-              }
-            }
-          }}
-        />
+      )}
+      <header>
+        <h1>Budgets</h1>
+        <button className="btn bg-black" id="Add_New-Budget" onClick={openAdd}>
+          + Add New Budget
+        </button>
       </header>
       <section>
         <div id="Summary">
@@ -199,14 +167,8 @@ export default function Budgets() {
                 <PopupMenu
                   icon={ellipsis}
                   label="Budget"
-                  onEdit={() => {
-                    setSelectedBudget(item);
-                    setOpenEdit(true);
-                  }}
-                  onDelete={() => {
-                    setSelectedBudget(item);
-                    setOpenDelete(true);
-                  }}
+                  onEdit={() => openEdit(item)}
+                  onDelete={() => openDelete(item)}
                 />
               </CardHeader>
               <h4>Maximum of ${item.maximum}</h4>

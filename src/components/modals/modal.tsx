@@ -41,18 +41,27 @@ interface ModalPot extends ModalGeneric {
   onSubmit?: (data: PotsForm) => void;
 }
 
-export default function Modal(props: ModalProps) {
-  const { isOpen, onClose, title, mode = "Add" } = props;
-  const categories = props.categories ?? [];
-  // Helper to convert color code to color name
-  // const getColorNameFromCode = (code: string) => {
-  //   return colors.find((c) => c.colorCode === code)?.name || code;
-  // };
-
-  // Helper to convert color name to color code
-  const getColorCodeFromName = (name: string) => {
-    return colors.find((c) => c.name === name)?.colorCode || name;
-  };
+function Modal({
+  isOpen,
+  onClose,
+  title,
+  mode = "Add",
+  categories,
+  initialData,
+  onSubmit,
+}: ModalProps) {
+  const [category, setCategory] = useState("");
+  const [maximum, setMaximum] = useState<number>(0);
+  const [theme, setTheme] = useState("");
+  console.log("Modal render", {
+    isOpen,
+    mode,
+    category,
+    maximum,
+    theme,
+  });
+  // console.count("renders");
+  useEscapeClose(onClose);
 
   const paragraph = {
     Add: "Choose a category to set a spending budget. These categories can help you monitor spending.",
@@ -60,67 +69,38 @@ export default function Modal(props: ModalProps) {
     Delete:
       "Are you sure you want to delete this budget? This action cannot be reversed, and all the data inside it will be removed forever.",
   };
-
-  // Initialize theme - handle both color code and name
-  const getInitialTheme = () => {
-    if (props.initialData?.theme) {
-      // If it's a color code, keep it; if it's a name, convert to code
-      const isColorCode = colors.some(
-        (c) => c.colorCode === props.initialData?.theme
-      );
-      return isColorCode
-        ? props.initialData.theme
-        : getColorCodeFromName(props.initialData.theme);
-    }
-    return colors[0]?.colorCode || "";
-  };
-
-  const [category, setCategory] = useState<string>(
-    props.initialData?.category ?? categories[0] ?? ""
-  );
+  // ✅ Sync state when modal opens or data changes
   useEffect(() => {
-    if (props.initialData?.maximum !== undefined) {
-      setMaximum(props.initialData.maximum);
-    }
-  }, [props.initialData]);
-  const [maximum, setMaximum] = useState<number>(0);
-  console.count("try:");
-  console.log(0);
-  const [theme, setTheme] = useState<string>(getInitialTheme());
+    if (!isOpen) return;
 
-  // close on Escape
-  useEscapeClose(onClose);
+    if (mode === "Edit" && initialData) {
+      setCategory(initialData.category);
+      setMaximum(initialData.maximum);
+      setTheme(initialData.theme);
+    }
+    if (mode === "Add") {
+      setCategory("");
+      setMaximum(0);
+      setTheme(colors[0]?.colorCode ?? "");
+    }
+  }, [isOpen, mode, initialData]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
-    // For Delete mode, skip validation and just call onSubmit
     if (mode === "Delete") {
-      props.onSubmit?.({ category, maximum, theme });
+      onSubmit?.({ category, maximum, theme });
       onClose();
       return;
     }
 
-    // Validation for Add/Edit modes
-    if (!category || category.trim() === "") {
-      alert("Please select a category");
-      return;
-    }
-    if (maximum <= 0) {
-      alert("Maximum spend must be greater than 0");
-      return;
-    }
-    if (!theme || theme.trim() === "") {
-      alert("Please select a theme");
-      return;
-    }
+    if (!category) return alert("Please select a category");
+    if (maximum <= 0) return alert("Maximum spend must be greater than 0");
+    if (!theme) return alert("Please select a theme");
 
-    props.onSubmit?.({ category, maximum, theme });
+    onSubmit?.({ category, maximum, theme });
     onClose();
   }
-
   if (!isOpen) return null;
-
   return (
     <div
       className="modal-overlay"
@@ -147,7 +127,7 @@ export default function Modal(props: ModalProps) {
               options={categories}
               title={title}
               mode="Edit"
-              value={mode == "Edit" ? props.initialData?.category : category}
+              value={initialData?.category}
               onChange={(v) => setCategory(v)}
             >
               <PiSortAscendingFill />
@@ -162,7 +142,7 @@ export default function Modal(props: ModalProps) {
                   type="number"
                   id={`MaximumSpend-${title}`}
                   name="maximum-spend"
-                  value={mode == "Edit" ? maximum : undefined}
+                  value={mode == "Add" ? undefined : maximum}
                   placeholder="0"
                   onChange={(e) => setMaximum(Number(e.target.value))}
                   min={0}
@@ -174,7 +154,7 @@ export default function Modal(props: ModalProps) {
               colors={colors}
               onChange={(v) => setTheme(v)}
               colorPicker={true}
-              value={mode == "Edit" ? props.initialData?.theme : ""}
+              value={initialData?.theme ?? theme}
             >
               <PiSortAscendingFill />
             </Input_Select_Themes>
@@ -205,17 +185,22 @@ export default function Modal(props: ModalProps) {
   );
 }
 
-export function ModalPot(props: ModalPot) {
-  const { isOpen, onClose, title, mode = "Add" } = props;
-  // Helper to convert color code to color name
-  // const getColorNameFromCode = (code: string) => {
-  //   return colors.find((c) => c.colorCode === code)?.name || code;
-  // };
+export default React.memo(Modal);
 
-  // Helper to convert color name to color code
-  const getColorCodeFromName = (name: string) => {
-    return colors.find((c) => c.name === name)?.colorCode || name;
-  };
+export function ModalPot({
+  isOpen,
+  onClose,
+  title,
+  mode = "Add",
+  initialData,
+  onSubmit,
+}: ModalPot) {
+  const [name, setName] = useState("");
+  const [target, setTarget] = useState(0);
+  const [theme, setTheme] = useState("");
+
+  useEscapeClose(onClose);
+  // console.count("render:");
 
   const paragraph = {
     Add: "Create a pot to set savings targets. These can help keep you on track as you save for special purchases.",
@@ -224,51 +209,37 @@ export function ModalPot(props: ModalPot) {
       "Are you sure you want to delete this pot? This action cannot be reversed, and all the data inside it will be removed forever.",
   };
 
-  // Initialize theme - handle both color code and name
-  const getInitialTheme = () => {
-    if (props.initialData?.theme) {
-      // If it's a color code, keep it; if it's a name, convert to code
-      const isColorCode = colors.some(
-        (c) => c.colorCode === props.initialData?.theme
-      );
-      return isColorCode
-        ? props.initialData.theme
-        : getColorCodeFromName(props.initialData.theme);
+  // ✅ Sync state on open / data change
+  useEffect(() => {
+    if (!isOpen) return;
+
+    if (mode === "Edit" && initialData) {
+      setName(initialData.name);
+      setTarget(initialData.target);
+      setTheme(initialData.theme);
     }
-    return colors[0]?.colorCode || "";
-  };
 
-  const [name, setName] = useState<string>(props.initialData?.name ?? "");
-  const [target, setTarget] = useState<number>(0);
-  const [theme, setTheme] = useState<string>(getInitialTheme());
-
-  // close on Escape
-  useEscapeClose(onClose);
+    if (mode === "Add") {
+      setName("");
+      setTarget(0);
+      setTheme(colors[0]?.colorCode ?? "");
+    }
+  }, [isOpen, mode, initialData]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // For Delete mode, skip validation and just call onSubmit
     if (mode === "Delete") {
-      props.onSubmit?.({ name, target, theme });
+      onSubmit?.({ name, target, theme });
       onClose();
       return;
     }
 
-    // Validation for Add/Edit modes
-    if (!name || name.trim() === "") {
-      alert("Please Enter a Name");
-      return;
-    }
-    if (target <= 0) {
-      alert("Maximum spend must be greater than 0");
-      return;
-    }
-    if (!theme || theme.trim() === "") {
-      alert("Please select a theme");
-      return;
-    }
-    props.onSubmit?.({ name, target, theme });
+    if (!name.trim()) return alert("Please enter a pot name");
+    if (target <= 0) return alert("Target must be greater than 0");
+    if (!theme) return alert("Please select a theme");
+
+    onSubmit?.({ name, target, theme });
     onClose();
   }
 
@@ -318,6 +289,7 @@ export function ModalPot(props: ModalPot) {
                   type="number"
                   id={`target-${title + mode}`}
                   name="target"
+                  value={mode == "Add" ? undefined : target}
                   placeholder="e.g. 2000"
                   onChange={(e) => setTarget(Number(e.target.value))}
                   min={0}
@@ -330,6 +302,7 @@ export function ModalPot(props: ModalPot) {
               colors={colors}
               onChange={(v) => setTheme(v)}
               colorPicker={true}
+              value={initialData?.theme ?? theme}
             >
               <PiSortAscendingFill />
             </Input_Select_Themes>

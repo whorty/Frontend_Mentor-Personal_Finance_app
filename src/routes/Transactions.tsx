@@ -7,8 +7,10 @@ import { useContext, useState, useMemo, useCallback } from "react";
 import { DataContext, SORT_OPTIONS } from "../utils/DataContext";
 import formatDate from "../utils/convertDate";
 import Pagination from "../components/Pagination/Pagination";
+import { useRenderCount } from "../hooks/useRenderCount";
 
 export default function Transactions() {
+  useRenderCount("Transactions");
   const { transactionsData } = useContext(DataContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");

@@ -2,8 +2,10 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import supabase from "../supabase-client";
 import { Input_Text } from "../components/Inputs/Search_Input";
+import { useRenderCount } from "../hooks/useRenderCount";
 
 export default function Login() {
+  useRenderCount("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);

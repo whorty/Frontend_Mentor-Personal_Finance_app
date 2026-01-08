@@ -1,3 +1,4 @@
+import { useRenderCount } from "../../hooks/useRenderCount";
 import type { TypeBudgets } from "../../utils/DataContext";
 import "./chart.css";
 
@@ -7,6 +8,7 @@ type PieChart = {
 };
 
 export default function PieChart({ budgets, grandT }: PieChart) {
+  useRenderCount("PieChart");
   if (!budgets || budgets.length === 0) return <p>No budget data.</p>;
   const total = budgets.reduce(
     (sum: number, b: { maximum: number }) => sum + b.maximum,

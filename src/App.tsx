@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "./hooks/useAuth";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
@@ -43,6 +43,14 @@ export default function App() {
   const [grandTotal, SetGrandTotal] = useState<sumTotal[]>([]);
   const { session } = useAuth();
   useEffect(() => {
+    if (!session) {
+      setBalanceData([]);
+      setPotsData([]);
+      setTransactionsData([]);
+      setBudgetsData([]);
+      SetSummaryBillsData([]);
+      SetGrandTotal([]);
+    }
     async function loadData() {
       try {
         const [
@@ -72,34 +80,29 @@ export default function App() {
       }
     }
     loadData();
-    if (session) {
-      loadData();
-    } else {
-      setBalanceData([]);
-      setPotsData([]);
-      setTransactionsData([]);
-      setBudgetsData([]);
-      SetSummaryBillsData([]);
-      SetGrandTotal([]);
-    }
   }, [session]);
-  const value = {
-    BalanceData,
-    potsData,
-    setPotsData,
-    transactionsData,
-    budgetsData,
-    setBudgetsData,
-    summaryBillsData,
-    grandTotal,
-  };
+  const value = useMemo(
+    () => ({
+      BalanceData,
+      potsData,
+      setPotsData,
+      transactionsData,
+      budgetsData,
+      setBudgetsData,
+      summaryBillsData,
+      grandTotal,
+    }),
+    [
+      BalanceData,
+      potsData,
+      transactionsData,
+      budgetsData,
+      summaryBillsData,
+      grandTotal,
+    ]
+  );
 
-  // useEffect(() => {
-  //   console.count("BalanceData log");
-  //   // Resto del código...
-  // }, []);
-  // console.count("render");
-
+  console.count("render");
   return (
     <BrowserRouter>
       <DataContext.Provider value={value}>

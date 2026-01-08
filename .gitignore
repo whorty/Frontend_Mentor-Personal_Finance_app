@@ -13,6 +13,9 @@ dist
 dist-ssr
 *.local
 CardInfo2.tsx
+BudgetsFake.tsx
+PotsFake.tsx
+useAppData.ts
 
 # Editor directories and files
 .vscode/*

@@ -6,6 +6,7 @@ export interface ColorObject {
 
 export const colors: ColorObject[] = [
   { name: "Grey", colorCode: "#B3B3B3", active: false },
+  { name: "Navy", colorCode: "#626070", active: false },
   { name: "Charcoal", colorCode: "#201F24", active: false },
   { name: "Green", colorCode: "#277C78", active: false },
   { name: "Beige", colorCode: "#F2CDAC", active: false },
