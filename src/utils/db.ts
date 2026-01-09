@@ -1,16 +1,43 @@
 import supabase from "../supabase-client";
 
 export async function fetchBalance() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) {
+    try {
+      const { data, error } = await supabase
+        .from("Personal_Finance_App-Balance")
+        .select()
+        .eq("user_id", user.id);
+      if (error) {
+        throw new Error("Error fetching data for balance:", error);
+      }
+      return data;
+    } catch (e) {
+      console.error("Error:", e);
+      return null;
+    }
+  }
+  return null;
+}
+
+export async function updateBalance(user_id: string, amount: number) {
   try {
+    // Use increment method to add or subtract from the current balance
     const { data, error } = await supabase
       .from("Personal_Finance_App-Balance")
+      .update({ current: amount })
+      .eq("user_id", user_id)
       .select();
+
     if (error) {
-      throw new Error("Error fetching data for balance:", error);
+      throw new Error("Error updating balance:", error);
     }
+
     return data;
   } catch (e) {
-    console.error("Error:", e);
+    console.error("Error updating balance:", e);
     return null;
   }
 }
@@ -31,18 +58,24 @@ export async function fetchTransactions() {
 }
 
 export async function fetchPots() {
-  try {
-    const { data, error } = await supabase
-      .from("Personal_Finance_App-Pots")
-      .select();
-    if (error) {
-      throw new Error("Error fetching data for pots:", error);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) {
+    try {
+      const { data, error } = await supabase
+        .from("Personal_Finance_App-Pots")
+        .select();
+      if (error) {
+        throw new Error("Error fetching data for pots:", error);
+      }
+      return data;
+    } catch (e) {
+      console.error("Error:", e);
+      return [];
     }
-    return data;
-  } catch (e) {
-    console.error("Error:", e);
-    return [];
   }
+  return [];
 }
 
 export async function fetchBudgets() {
@@ -170,7 +203,28 @@ export async function updatePot(
 }
 
 export async function deletePot(id: number) {
+  const [datab] = (await fetchBalance()) ?? [];
+  const { current } = datab;
   try {
+    // Get the pot details first
+    const { data: pot, error: potError } = await supabase
+      .from("Personal_Finance_App-Pots")
+      .select()
+      .eq("id", id)
+      .single(); // Assume there is only one result
+
+    if (potError || !pot) {
+      throw new Error("Error fetching pot details.");
+    }
+
+    // Add the pot's total back to the user's balance
+    const { total, user_id } = pot;
+    const updatedBalance = await updateBalance(user_id, current + total); // Add the pot's total back to balance
+
+    if (!updatedBalance) {
+      throw new Error("Failed to update balance after pot deletion.");
+    }
+
     const { error } = await supabase
       .from("Personal_Finance_App-Pots")
       .delete()

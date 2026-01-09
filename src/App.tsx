@@ -50,6 +50,7 @@ export default function App() {
       setBudgetsData([]);
       SetSummaryBillsData([]);
       SetGrandTotal([]);
+      return;
     }
     async function loadData() {
       try {

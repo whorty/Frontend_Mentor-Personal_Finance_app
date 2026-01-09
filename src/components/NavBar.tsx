@@ -41,12 +41,15 @@ export default function NavBar() {
         {menuItems.map((item, index) => (
           <li
             className={`${
-              pathname == "/app/" + item.route ? "PageActive" : ""
+              pathname == "/app/" + item.route ||
+              pathname == "/app" + item.route
+                ? "PageActive"
+                : ""
             }`}
             key={index}
           >
             <NavLink
-              to={item.route == "overview" ? "/app" : `/app/${item.route}`}
+              to={item.route ? `/app/${item.route}` : "/app"}
               className="menu-item"
             >
               <span className="icon">
