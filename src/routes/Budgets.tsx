@@ -211,6 +211,7 @@ export default function Budgets() {
               <GenericContainer
                 name="Lastest Spending"
                 route="/app/Transactions"
+                category={item.category}
               >
                 {
                   // use precomputed last-3 map for this category

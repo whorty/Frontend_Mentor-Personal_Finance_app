@@ -3,19 +3,31 @@ import { Input_Search, Input_Select } from "../components/Inputs/Search_Input";
 import { TiFilter } from "react-icons/ti";
 import "../components/Transactions/transactions.css";
 import "../components/Pagination/Pagination.css";
-import { useContext, useState, useMemo, useCallback } from "react";
+import { useContext, useState, useMemo, useCallback, useEffect } from "react";
 import { DataContext, SORT_OPTIONS } from "../utils/DataContext";
 import formatDate from "../utils/convertDate";
 import Pagination from "../components/Pagination/Pagination";
 import { useRenderCount } from "../hooks/useRenderCount";
+import { useSearchParams } from "react-router-dom";
 
 export default function Transactions() {
   useRenderCount("Transactions");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get("category") ?? "";
   const { transactionsData } = useContext(DataContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    categoryParam || ""
+  );
   const [sortMethod, setSortMethod] = useState<string>("Latest");
+
+  useEffect(() => {
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+      setCurrentPage(1);
+    }
+  }, [categoryParam]);
 
   const categories = useMemo(
     () => [
@@ -57,10 +69,19 @@ export default function Transactions() {
     setCurrentPage(1);
   }, []);
 
-  const handleCategoryChange = useCallback((category: string) => {
-    setSelectedCategory(category);
-    setCurrentPage(1);
-  }, []);
+  const handleCategoryChange = useCallback(
+    (category: string) => {
+      setSelectedCategory(category);
+      setCurrentPage(1);
+
+      if (category && category !== "All") {
+        setSearchParams({ category });
+      } else {
+        setSearchParams({});
+      }
+    },
+    [setSearchParams]
+  );
 
   const handleSortChange = useCallback((method: string) => {
     setSortMethod(method);
