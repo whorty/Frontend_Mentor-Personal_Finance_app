@@ -4,22 +4,29 @@ import "./chart.css";
 
 type PieChart = {
   budgets: TypeBudgets[] | null;
+  granT: number;
 };
 
-export default function BasicPie({ budgets }: PieChart) {
+export default function BasicPie({ budgets, granT }: PieChart) {
   if (!budgets || budgets.length === 0) return <p>No budget data.</p>;
   const total = budgets.reduce(
     (sum: number, b: { maximum: number }) => sum + b.maximum,
     0
   );
-  const spent = 350;
+  const spent = granT;
   const PieData = budgets.map((item) => ({
     id: item.id,
     value: item.maximum,
     color: item.theme,
   }));
   return (
-    <div style={{ position: "relative", display: "flex" }}>
+    <div
+      style={{
+        position: "relative",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       <PieChart
         series={[
           {

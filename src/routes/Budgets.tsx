@@ -1,5 +1,4 @@
 import { useContext, useMemo } from "react";
-import PieChart from "../components/Chart/PieChart";
 import {
   DataContext,
   type Transaction,
@@ -18,6 +17,9 @@ import TransactionsList from "../components/TransactionsList";
 import Modal from "../components/modals/modal.tsx";
 import { addBudget, updateBudget, deleteBudget } from "../utils/db";
 import { useModal } from "../components/modals/useModal.ts";
+// import PieChart from "../components/Chart/PieChart";
+// import PieChartSvg from "../components/Chart/PieChartSvg.tsx";
+import BasicPie from "../components/Chart/PiechartLibrary.tsx";
 
 export default function Budgets() {
   const { budgetsData, transactionsData, setBudgetsData, grandTotal } =
@@ -32,6 +34,10 @@ export default function Budgets() {
     openDelete,
     close,
   } = useModal<TypeBudgets>();
+
+  const grand_total = useMemo(() => {
+    return grandTotal?.[0]?.grand_total ?? 0;
+  }, [grandTotal]);
 
   const totalSpentByCategory = useMemo(() => {
     if (!budgetsData || !transactionsData) return {} as Record<string, number>;
@@ -144,10 +150,9 @@ export default function Budgets() {
       <section>
         <div id="Summary">
           <div className="generic">
-            <PieChart
-              budgets={budgetsData}
-              grandT={grandTotal[0]?.grand_total}
-            />
+            {/* <PieChart budgets={budgetsData} grandT={grand_total} /> */}
+            {/* <PieChartSvg budgets={budgetsData} grandT={grand_total} /> */}
+            <BasicPie budgets={budgetsData} granT={grand_total} />
             <div className="spending-summary">
               <h2>Spending Summary</h2>
               {budgetsData?.map((item) => (

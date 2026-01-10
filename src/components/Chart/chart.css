@@ -16,8 +16,6 @@
   justify-content: center;
   position: relative;
   z-index: 0;
-  /* Animate the rotation */
-  /* animation: rotateChart 1s ease-out forwards; */
   background: conic-gradient(from var(--angle), var(--segments));
 
   &::before {
@@ -48,15 +46,6 @@
     }
   }
 }
-
-/* @keyframes rotateChart {
-  from {
-    --angle: 0deg;
-  }
-  to {
-    --angle: 360deg;
-  }
-} */
 
 @property --slice-fill {
   syntax: "<percentage>";
@@ -115,5 +104,37 @@
     background: var(--White);
     border-radius: inherit;
     opacity: 0.25;
+  }
+}
+
+.chart-inner_svg {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  text-align: center;
+  inset: 0;
+  z-index: 20;
+  h5 {
+    color: var(--Grey-500);
+  }
+}
+
+svg circle {
+  transform-origin: center;
+}
+
+.pie-slice {
+  stroke-dasharray: var(--dash);
+  animation: drawSlice 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes drawSlice {
+  from {
+    stroke-dasharray: 0 var(--Circu);
+  }
+  to {
+    stroke-dasharray: var(--acc) var(--Circu);
   }
 }
