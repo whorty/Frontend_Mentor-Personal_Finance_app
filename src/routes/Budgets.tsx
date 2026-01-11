@@ -1,16 +1,12 @@
-import { useContext, useMemo } from "react";
-import {
-  DataContext,
-  type Transaction,
-  type TypeBudgets,
-} from "../utils/DataContext";
+import { useContext } from "react";
+import { DataContext, type TypeBudgets } from "../utils/DataContext";
 import "../components/Budgets/BudgetsStyles.css";
 import DetailLabel, { SpendingSummaryExt } from "../components/DetailsLabel";
 import CardHeader from "../components/CardHeader";
 import PopupMenu from "../components/PopUpMenu/PopupMenu";
 import ellipsis from "/images/icons/icon-ellipsis.svg";
 import { ProgressBarBudgets } from "../components/progressBar/ProgressBar";
-import getLastest from "../utils/getLastest";
+// import getLastest from "../utils/getLastest";
 import getLastThreeFromMap from "../utils/getLastThreeFromMap";
 import GenericContainer from "../components/GenericContainer";
 import TransactionsList from "../components/TransactionsList";
@@ -20,9 +16,19 @@ import { useModal } from "../components/modals/useModal.ts";
 // import PieChart from "../components/Chart/PieChart";
 // import PieChartSvg from "../components/Chart/PieChartSvg.tsx";
 import BasicPie from "../components/Chart/PiechartLibrary.tsx";
+import {
+  useTotalSpentByCategory,
+  useGrandTotal,
+  useLastTransactionsMap,
+  useAvailableCategories,
+  useEditableCategories,
+  useInitialBudgetData,
+} from "../hooks/useBudgetsMemo.ts";
+import { useRenderCount } from "../hooks/useRenderCount.tsx";
 
 export default function Budgets() {
-  const { budgetsData, transactionsData, setBudgetsData, grandTotal } =
+  useRenderCount("budget");
+  const { budgetsData, transactionsData, setBudgetsData } =
     useContext(DataContext);
 
   const {
@@ -35,63 +41,27 @@ export default function Budgets() {
     close,
   } = useModal<TypeBudgets>();
 
-  const grand_total = useMemo(() => {
-    return grandTotal?.[0]?.grand_total ?? 0;
-  }, [grandTotal]);
+  const totalSpentByCategory = useTotalSpentByCategory(
+    budgetsData,
+    transactionsData!
+  );
 
-  const totalSpentByCategory = useMemo(() => {
-    if (!budgetsData || !transactionsData) return {} as Record<string, number>;
-    const wanted = budgetsData.map((item) => item.category);
-    const result = transactionsData.filter((t) => wanted.includes(t.category));
-    const last3Transactions = getLastest<Transaction>(result);
-    if (!last3Transactions) return {} as Record<string, number>;
-    return Object.fromEntries(
-      Object.entries(last3Transactions).map(([category, txs]) => {
-        const total = txs.reduce((sum, t) => sum + Math.abs(t.amount), 0);
-        return [category, total];
-      })
-    ) as Record<string, number>;
-  }, [budgetsData, transactionsData]);
+  const grand_total = useGrandTotal(totalSpentByCategory);
 
-  const last3TransactionsMap = useMemo(() => {
-    if (!transactionsData) return {} as Record<string, Transaction[]>;
-    return getLastest<Transaction>(transactionsData) as Record<
-      string,
-      Transaction[]
-    >;
-  }, [transactionsData]);
+  const last3TransactionsMap = useLastTransactionsMap(transactionsData!);
 
-  const availableCategories = useMemo(() => {
-    if (!transactionsData) return [] as string[];
-    const transCats = Array.from(
-      new Set(transactionsData.map((t) => t.category))
-    );
-    const budgetCats = new Set((budgetsData || []).map((b) => b.category));
-    return transCats.filter((c) => !budgetCats.has(c));
-  }, [transactionsData, budgetsData]);
+  const availableCategories = useAvailableCategories(
+    transactionsData!,
+    budgetsData
+  );
 
-  const editableCategories = useMemo(() => {
-    if (!transactionsData || !selectedBudget) return [] as string[];
-    const transCats = Array.from(
-      new Set(transactionsData.map((t) => t.category))
-    );
-    // For edit mode: exclude budgets except the one being edited
-    const otherBudgetCats = new Set(
-      (budgetsData || [])
-        .filter((b) => b.id !== selectedBudget.id)
-        .map((b) => b.category)
-    );
-    return transCats.filter((c) => !otherBudgetCats.has(c));
-  }, [transactionsData, budgetsData, selectedBudget]);
+  const editableCategories = useEditableCategories(
+    transactionsData!,
+    budgetsData,
+    selectedBudget!
+  );
 
-  const initialData = useMemo(() => {
-    if (!selectedBudget) return undefined;
-    return {
-      category: selectedBudget.category,
-      maximum: selectedBudget.maximum,
-      theme: selectedBudget.theme,
-    };
-  }, [selectedBudget]);
+  const initialData = useInitialBudgetData(selectedBudget!);
 
   return (
     <section id="Budgets">

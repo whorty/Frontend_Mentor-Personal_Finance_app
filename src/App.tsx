@@ -23,7 +23,6 @@ import {
   fetchTransactions,
   fetchBudgets,
   fetchSummaryBills,
-  fetchGrandTotal,
 } from "./utils/db";
 import SignUp from "./routes/SignUp";
 import Intro from "./routes/Intro";
@@ -60,14 +59,12 @@ export default function App() {
           dataTransaction,
           dataBudgets,
           dataSummaryBill,
-          dataGrandTotal,
         ] = await Promise.all([
           fetchBalance(),
           fetchPots(),
           fetchTransactions(),
           fetchBudgets(),
           fetchSummaryBills(),
-          fetchGrandTotal(),
         ]);
 
         setBalanceData(dataBalance);
@@ -75,7 +72,6 @@ export default function App() {
         setTransactionsData(dataTransaction);
         setBudgetsData(dataBudgets ?? []);
         SetSummaryBillsData(dataSummaryBill);
-        SetGrandTotal(dataGrandTotal);
       } catch (e) {
         console.error("Failed to load data:", e);
       }

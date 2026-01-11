@@ -8,6 +8,9 @@ export type Summary = {
   total_paid_bills: number;
   total_due_soon: number;
   total_upcoming: number;
+  count_paid_bills: number;
+  count_due_soon: number;
+  count_total_upcoming: number;
 };
 
 export type sumTotal = {

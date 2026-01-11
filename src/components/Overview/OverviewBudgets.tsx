@@ -1,17 +1,23 @@
 import { DataContext } from "../../utils/DataContext";
-import { useContext, useMemo } from "react";
+import { useContext } from "react";
 import "./OverviewStyles.css";
 import BasicPie from "../Chart/PiechartLibrary";
 // import PieChart from "../Chart/PieChart";
 // import PieChartSvg from "../Chart/PieChartSvg";
 import DetailLabel from "../DetailsLabel";
 import { memo } from "react";
+import {
+  useGrandTotal,
+  useTotalSpentByCategory,
+} from "../../hooks/useBudgetsMemo";
 
 function OverviewBudgets() {
-  const { budgetsData, grandTotal } = useContext(DataContext);
-  const grand_total = useMemo(() => {
-    return grandTotal?.[0]?.grand_total ?? 0;
-  }, [grandTotal]);
+  const { budgetsData, transactionsData } = useContext(DataContext);
+  const totalSpentByCategory = useTotalSpentByCategory(
+    budgetsData,
+    transactionsData!
+  );
+  const grand_total = useGrandTotal(totalSpentByCategory);
   return (
     <div className="overviewBudgets">
       {/* <PieChart budgets={budgetsData} grandT={grand_total} /> */}

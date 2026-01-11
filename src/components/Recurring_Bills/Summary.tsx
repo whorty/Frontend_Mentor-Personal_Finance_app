@@ -9,7 +9,9 @@ export default function Summary() {
         <div className="list-style" key={item.name}>
           <h4>{item.name}</h4>
           <h4>
-            <strong>$({item.bill})</strong>
+            <strong>
+              ${item.count} ({item.bill.toFixed(2)})
+            </strong>
           </h4>
         </div>
       ))}
