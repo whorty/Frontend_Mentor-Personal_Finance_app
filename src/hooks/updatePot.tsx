@@ -46,13 +46,13 @@ export default function usePotAction() {
     const [data] = (await fetchBalance()) ?? [];
     const { current, user_id } = data;
     console.log(current, "vs", ammount);
-    if (current < ammount) {
+    if (mode == "Add" && current < ammount) {
       alert("Insufficient balance funds");
       ToggleModal();
       return;
     }
     const result = await updatePot(id, { total: newTotal });
-    console.log(current, user_id);
+    console.log(current, user_id, total);
     // Update the user's balance
     let updatedBalance = undefined;
     if (result && setPotsData && user_id !== null) {

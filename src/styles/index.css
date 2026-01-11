@@ -289,6 +289,7 @@ section > header {
       row-gap: 2rem;
       max-width: 560px;
       padding: var(--Spacing-400);
+      margin: 0 auto;
       .form {
         display: block;
         display: inherit;

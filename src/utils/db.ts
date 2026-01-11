@@ -65,7 +65,8 @@ export async function fetchPots() {
     try {
       const { data, error } = await supabase
         .from("Personal_Finance_App-Pots")
-        .select();
+        .select()
+        .eq("user_id", user.id);
       if (error) {
         throw new Error("Error fetching data for pots:", error);
       }
