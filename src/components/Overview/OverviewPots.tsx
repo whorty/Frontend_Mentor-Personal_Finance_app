@@ -1,4 +1,3 @@
-// import data from "../../utils/data.json";
 import { DataContext, type Total } from "../../utils/DataContext";
 import { useContext } from "react";
 import DetailLabel from "../DetailsLabel";
@@ -6,17 +5,11 @@ import DetailLabel from "../DetailsLabel";
 function getTotalTarget(pots: Total[]): number {
   return pots.reduce((sum: number, item: Total) => sum + item.total, 0);
 }
-
-// console.log("valor total:", getTotalTarget(pots));
-
 export default function OverviewPots() {
   const { potsData } = useContext(DataContext);
   // const { pots } = data;
-  // console.log(potsData);
-  // console.log("data.json:", pots);
   // const totalSaved = getTotalTarget(pots);
   const totalSaved2 = getTotalTarget(potsData);
-  // console.log("total:", totalSaved2);
   return (
     <div className="overviewPots">
       <div className="total">

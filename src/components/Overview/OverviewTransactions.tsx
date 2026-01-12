@@ -4,7 +4,6 @@ import { useContext } from "react";
 
 export default function OverviewTransactions() {
   const { transactionsData } = useContext(DataContext);
-  // console.log(transactionsData);
   return (
     <>
       {transactionsData

@@ -19,6 +19,3 @@ export default function formatDate(isoString: string, format?: string): string {
   if (format) return `Monthly-${getOrdinal(day)}`;
   return `${day} ${month} ${year}`;
 }
-
-// Example:
-// console.log(formatDate("2024-08-19T14:23:11+00:00")); // "19 Aug 2024"

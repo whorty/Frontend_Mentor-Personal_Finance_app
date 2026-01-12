@@ -2,10 +2,8 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import supabase from "../supabase-client";
 import { Input_Text } from "../components/Inputs/Search_Input";
-import { useRenderCount } from "../hooks/useRenderCount";
 
 export default function SignUp() {
-  useRenderCount("SingUp");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -64,7 +62,7 @@ export default function SignUp() {
         setSuccess(
           "Account created! Check your email to confirm your account."
         );
-        console.log("Sign up successful:", data.user);
+        console.log("Sign up successful");
         // Clear form
         setName("");
         setEmail("");

@@ -7,11 +7,9 @@ import { useContext, useState, useMemo, useCallback, useEffect } from "react";
 import { DataContext, SORT_OPTIONS } from "../utils/DataContext";
 import formatDate from "../utils/convertDate";
 import Pagination from "../components/Pagination/Pagination";
-import { useRenderCount } from "../hooks/useRenderCount";
 import { useSearchParams } from "react-router-dom";
 
 export default function Transactions() {
-  useRenderCount("Transactions");
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get("category") ?? "";
   const { transactionsData } = useContext(DataContext);

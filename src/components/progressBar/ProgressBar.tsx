@@ -24,7 +24,6 @@ export function ProgressBarPots({
     invest = calcPercentage(newTotal, target) + "%";
     take = parseFloat(balance) - parseFloat(invest);
   }
-  // console.log(balance, take, newTotal);
   const styleTake = parseFloat(balance) == take ? "fullwithdraw" : "";
   return (
     <div className={`progress-bar ${mode}`} style={{ marginBottom: "13px" }}>

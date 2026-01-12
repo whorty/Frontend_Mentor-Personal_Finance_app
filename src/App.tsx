@@ -27,6 +27,7 @@ import SignUp from "./routes/SignUp";
 import Intro from "./routes/Intro";
 import AuthRequired from "./components/AuthRequired";
 import NotFound from "./routes/NotFound";
+import FirstVisitModalManager from "./components/modals/FirstVisitModalManager";
 
 export default function App() {
   const [BalanceData, setBalanceData] = useState<Balance[]>([]);
@@ -83,11 +84,10 @@ export default function App() {
     }),
     [BalanceData, potsData, transactionsData, budgetsData, summaryBillsData]
   );
-
-  console.count("render");
   return (
     <BrowserRouter>
       <DataContext.Provider value={value}>
+        <FirstVisitModalManager />
         <Routes>
           <Route path="/" element={<Intro />}>
             <Route index element={<Login />} />

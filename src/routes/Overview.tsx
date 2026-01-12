@@ -6,10 +6,8 @@ import OverviewPots from "../components/Overview/OverviewPots";
 import OverviewTransactions from "../components/Overview/OverviewTransactions";
 import OverviewBudgets from "../components/Overview/OverviewBudgets";
 import OverviewReBills from "../components/Overview/OverviewReBills";
-import { useRenderCount } from "../hooks/useRenderCount";
 
 export default function Overview() {
-  useRenderCount("Overview");
   return (
     <section id="overview">
       <h1>Overview</h1>

@@ -53,14 +53,6 @@ function Modal({
   const [category, setCategory] = useState("");
   const [maximum, setMaximum] = useState<number>(0);
   const [theme, setTheme] = useState("");
-  console.log("Modal render", {
-    isOpen,
-    mode,
-    category,
-    maximum,
-    theme,
-  });
-  // console.count("renders");
   useEscapeClose(onClose);
 
   const paragraph = {
@@ -201,7 +193,6 @@ export function ModalPot({
   const [theme, setTheme] = useState("");
 
   useEscapeClose(onClose);
-  // console.count("render:");
 
   const paragraph = {
     Add: "Create a pot to set savings targets. These can help keep you on track as you save for special purchases.",

@@ -2,10 +2,8 @@ import Summary from "../components/Recurring_Bills/Summary";
 import TotalBills from "../components/Recurring_Bills/TotalBills";
 import "../components/Recurring_Bills/Recurring.css";
 import Bills from "../components/Recurring_Bills/Bills";
-import { useRenderCount } from "../hooks/useRenderCount";
 
 export default function RecurringBills() {
-  useRenderCount("Recurring");
   return (
     <section>
       <header>

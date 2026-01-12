@@ -1,5 +1,4 @@
 import { useMemo, memo } from "react";
-import { useRenderCount } from "../../hooks/useRenderCount";
 import type { TypeBudgets } from "../../utils/DataContext";
 import "./chart.css";
 
@@ -9,8 +8,6 @@ type PieChartProps = {
 };
 
 function PieChart({ budgets, grandT }: PieChartProps) {
-  useRenderCount("PieChart");
-
   // ✅ Always call hooks first
   const total = useMemo(() => {
     if (!budgets || budgets.length === 0) return 0;

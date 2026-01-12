@@ -45,14 +45,12 @@ export default function usePotAction() {
     // Update Pot
     const [data] = (await fetchBalance()) ?? [];
     const { current, user_id } = data;
-    console.log(current, "vs", ammount);
     if (mode == "Add" && current < ammount) {
       alert("Insufficient balance funds");
       ToggleModal();
       return;
     }
     const result = await updatePot(id, { total: newTotal });
-    console.log(current, user_id, total);
     // Update the user's balance
     let updatedBalance = undefined;
     if (result && setPotsData && user_id !== null) {
@@ -68,7 +66,7 @@ export default function usePotAction() {
         prevPots.map((pot) => (pot.id === id ? { ...pot, ...result[0] } : pot))
       );
       ToggleModal();
-      console.log("Pot updated successfully:", result);
+      // console.log("Pot updated successfully:", result);
     } else {
       console.error("Failed to update Pot");
     }

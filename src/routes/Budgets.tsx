@@ -24,10 +24,8 @@ import {
   useEditableCategories,
   useInitialBudgetData,
 } from "../hooks/useBudgetsMemo.ts";
-import { useRenderCount } from "../hooks/useRenderCount.tsx";
 
 export default function Budgets() {
-  useRenderCount("budget");
   const { budgetsData, transactionsData, setBudgetsData } =
     useContext(DataContext);
 

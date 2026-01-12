@@ -1,5 +1,4 @@
 import { useMemo, memo } from "react";
-import { useRenderCount } from "../../hooks/useRenderCount";
 import type { TypeBudgets } from "../../utils/DataContext";
 import "./chart.css";
 
@@ -13,8 +12,6 @@ const STROKE_WIDTH = 39;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 function PieChart({ budgets, grandT }: PieChartProps) {
-  useRenderCount("PieChart");
-
   // ✅ Total budget
   const total = useMemo(() => {
     if (!budgets?.length) return 0;

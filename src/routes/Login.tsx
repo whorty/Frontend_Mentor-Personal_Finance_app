@@ -2,10 +2,8 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import supabase from "../supabase-client";
 import { Input_Text } from "../components/Inputs/Search_Input";
-import { useRenderCount } from "../hooks/useRenderCount";
 
 export default function Login() {
-  useRenderCount("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,8 +29,7 @@ export default function Login() {
       }
 
       if (data?.user) {
-        console.log("Login successful:", data.user);
-        // Navigate to app after successful login
+        console.log("Login successful:");
         navigate("/app");
       }
     } catch (err) {

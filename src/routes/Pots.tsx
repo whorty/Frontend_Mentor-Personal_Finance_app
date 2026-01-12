@@ -5,10 +5,8 @@ import { useContext, useMemo } from "react";
 import { ModalPot } from "../components/modals/modal";
 import { addPot, deletePot, updatePot } from "../utils/db";
 import { useModal } from "../components/modals/useModal";
-import { useRenderCount } from "../hooks/useRenderCount";
 
 export default function Pots() {
-  useRenderCount("pot");
   const { potsData, setPotsData } = useContext(DataContext);
   const {
     mode,
