@@ -15,7 +15,6 @@ import {
   type Transaction,
   type TypeBudgets,
   type Summary,
-  type sumTotal,
 } from "./utils/DataContext";
 import {
   fetchBalance,
@@ -30,16 +29,11 @@ import AuthRequired from "./components/AuthRequired";
 import NotFound from "./routes/NotFound";
 
 export default function App() {
-  const [BalanceData, setBalanceData] = useState<Balance[] | null>([]);
+  const [BalanceData, setBalanceData] = useState<Balance[]>([]);
   const [potsData, setPotsData] = useState<Total[]>([]);
-  const [transactionsData, setTransactionsData] = useState<
-    Transaction[] | null
-  >([]);
+  const [transactionsData, setTransactionsData] = useState<Transaction[]>([]);
   const [budgetsData, setBudgetsData] = useState<TypeBudgets[]>([]);
-  const [summaryBillsData, SetSummaryBillsData] = useState<Summary[] | null>(
-    []
-  );
-  const [grandTotal, SetGrandTotal] = useState<sumTotal[]>([]);
+  const [summaryBillsData, setSummaryBillsData] = useState<Summary[]>([]);
   const { session } = useAuth();
   useEffect(() => {
     if (!session) {
@@ -47,8 +41,7 @@ export default function App() {
       setPotsData([]);
       setTransactionsData([]);
       setBudgetsData([]);
-      SetSummaryBillsData([]);
-      SetGrandTotal([]);
+      setSummaryBillsData([]);
       return;
     }
     async function loadData() {
@@ -67,11 +60,11 @@ export default function App() {
           fetchSummaryBills(),
         ]);
 
-        setBalanceData(dataBalance);
-        setPotsData(dataPots);
-        setTransactionsData(dataTransaction);
+        setBalanceData(dataBalance ?? []);
+        setPotsData(dataPots ?? []);
+        setTransactionsData(dataTransaction ?? []);
         setBudgetsData(dataBudgets ?? []);
-        SetSummaryBillsData(dataSummaryBill);
+        setSummaryBillsData(dataSummaryBill);
       } catch (e) {
         console.error("Failed to load data:", e);
       }
@@ -87,16 +80,8 @@ export default function App() {
       budgetsData,
       setBudgetsData,
       summaryBillsData,
-      grandTotal,
     }),
-    [
-      BalanceData,
-      potsData,
-      transactionsData,
-      budgetsData,
-      summaryBillsData,
-      grandTotal,
-    ]
+    [BalanceData, potsData, transactionsData, budgetsData, summaryBillsData]
   );
 
   console.count("render");

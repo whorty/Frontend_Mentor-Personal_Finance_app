@@ -31,6 +31,7 @@ type CustomInput = {
   options?: string[];
   colorPicker?: boolean;
   colors?: ColorObject[];
+  currentColor?: string;
   value?: string;
   mode?: string;
 };
@@ -133,11 +134,14 @@ export function Input_Select_Themes(props: CustomInput) {
     setOpen(false);
     if (props.onChange) props.onChange(colorCode);
   }
-
   return (
     <div className="input-layout">
       {props.label && <h4 className="desktop">{props.label}</h4>}
-      <div className="input-custom popup-container small" ref={menuRef}>
+      <div
+        className="input-custom popup-container small check"
+        ref={menuRef}
+        style={{ "--color": props.currentColor } as React.CSSProperties}
+      >
         <input
           type="text"
           name={`search-colorPicker`}
@@ -147,7 +151,7 @@ export function Input_Select_Themes(props: CustomInput) {
           onClick={() => setOpen(!open)}
           placeholder={selected}
         />
-        <FaCaretDown className="" onClick={() => setOpen(!open)} />
+        <FaCaretDown onClick={() => setOpen(!open)} />
         <div className="mobile" onClick={() => setOpen(!open)}>
           {props.children}
         </div>

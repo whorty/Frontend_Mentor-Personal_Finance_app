@@ -16,6 +16,8 @@ CardInfo2.tsx
 BudgetsFake.tsx
 PotsFake.tsx
 useAppData.ts
+test.sql
+test2.sql
 
 # Editor directories and files
 .vscode/*

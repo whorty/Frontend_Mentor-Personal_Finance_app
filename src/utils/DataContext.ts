@@ -48,26 +48,23 @@ export interface TypeBudgets extends Generic {
 }
 
 export interface PromiseVal {
-  BalanceData: Balance[] | null;
+  BalanceData: Balance[] | [];
   potsData: Total[];
   setPotsData?: React.Dispatch<React.SetStateAction<Total[]>>;
-  transactionsData: Transaction[] | null;
+  transactionsData: Transaction[] | [];
   budgetsData: TypeBudgets[];
   setBudgetsData?: React.Dispatch<React.SetStateAction<TypeBudgets[]>>;
-  summaryBillsData: Summary[] | null;
-  grandTotal: sumTotal[];
-  // refetchBudgets?: () => Promise<void>;
+  summaryBillsData: Summary[] | [];
 }
 
 export const DataContext = React.createContext<PromiseVal>({
-  BalanceData: null,
+  BalanceData: [],
   potsData: [],
   setPotsData: undefined,
   transactionsData: [],
   budgetsData: [],
   setBudgetsData: undefined,
   summaryBillsData: [],
-  grandTotal: [],
 });
 
 export const SORT_OPTIONS = {

@@ -21,11 +21,27 @@ export default function SignUp() {
     setLoading(true);
 
     // Validation
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters");
+    // Validation
+    const cleanName = name?.trim();
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const fail = (msg: string) => {
+      setError(msg);
       setLoading(false);
       return;
-    }
+    };
+
+    if (!cleanName || cleanName.length < 3)
+      return fail("Name must be at least 3 characters");
+    if (!/^[\p{L}\s'-]+$/u.test(cleanName))
+      return fail("Name must contain only letters and spaces");
+    if (!emailRegex.test(email))
+      return fail("Please enter a valid email address");
+    if (!passwordRegex.test(password))
+      return fail(
+        "Password must be at least 8 characters and include a letter, a number, and a special character"
+      );
 
     try {
       // Sign up user
@@ -70,10 +86,8 @@ export default function SignUp() {
     <div className="Login_Credentials">
       <div className="cardinfo bg-white">
         <h1>Sign Up</h1>
-        {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
-        {success && (
-          <p style={{ color: "green", marginBottom: "1rem" }}>{success}</p>
-        )}
+        {error && <p className="error">{error}</p>}
+        {success && <p style={{ color: "var(--Green)" }}>{success}</p>}
         <form className="form" onSubmit={handleSignUp}>
           <div className="input-default">
             <label htmlFor="Name">Name</label>

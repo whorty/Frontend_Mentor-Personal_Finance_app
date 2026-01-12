@@ -155,6 +155,7 @@ function Modal({
               onChange={(v) => setTheme(v)}
               colorPicker={true}
               value={initialData?.theme ?? theme}
+              currentColor={theme ?? colors[0].colorCode}
             >
               <PiSortAscendingFill />
             </Input_Select_Themes>
@@ -303,6 +304,7 @@ export function ModalPot({
               onChange={(v) => setTheme(v)}
               colorPicker={true}
               value={initialData?.theme ?? theme}
+              currentColor={theme ?? colors[0].colorCode}
             >
               <PiSortAscendingFill />
             </Input_Select_Themes>
