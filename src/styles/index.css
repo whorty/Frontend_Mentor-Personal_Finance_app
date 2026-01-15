@@ -256,7 +256,8 @@ section > header {
   .banner {
     display: flex;
     width: 100%;
-    max-width: 560px;
+    max-width: max(560px, 30vw);
+    margin: 0 auto;
     position: relative;
     justify-content: space-between;
     background-image: url("/images/illustration-authentication.svg");
