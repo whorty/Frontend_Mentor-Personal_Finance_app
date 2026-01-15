@@ -168,7 +168,6 @@ export interface PotData {
 
 export async function addPot(PotData: PotData) {
   try {
-    console.log("try:", PotData);
     const { data, error } = await supabase
       .from("Personal_Finance_App-Pots")
       .insert([PotData])
