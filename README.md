@@ -1,73 +1,72 @@
-# React + TypeScript + Vite
+# 💸 Personal Finance App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains my solution to the Frontend Mentor challenge: Personal Finance App.
 
-Currently, two official plugins are available:
+The goal of this project was to build a fully accessible, responsive personal finance dashboard that closely matches the provided design while delivering a complete, interactive user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tech Stack
 
-## React Compiler
+- React + Vite
+- TypeScript
+- Supabase – user authentication & backend services
+- Vercel – deployment
+- Charting library (React-based) for data visualization
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Features
 
-## Expanding the ESLint configuration
+- Overview dashboard with all financial data at a glance
+- Transactions page with:
+  - Pagination (10 transactions per page)
+  - Search, sort, and filter functionality
+- Budgets management:
+  - Create, read, update, and delete (CRUD) budgets
+  - View the latest three transactions per budget category
+- Saving pots:
+  - Track progress toward goals
+  - Add and withdraw money
+- Recurring bills:
+  - View current month status
+  - Search and sort functionality
+- Responsive layout optimized for all screen sizes
+- Hover and focus states for all interactive elements
+- Form validation with user-friendly error messages
+- User authentication using Supabase (login & protected access)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Future Improvements [ reminder ]
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Fully keyboard-navigable UI [future update]
+- Add more animations, including:
+  - Intro animations
+  - Page transitions
+- Enhance micro-interactions for an even smoother user experience
+- Continue refining accessibility and performance
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Deployment
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Vercel: https://frontend-mentor-personal-finance-ap-eight.vercel.app/
+
+## 📊 Charts & Visualizations
+
+An interesting part of this project was the pie chart implementation:
+
+- I built three different pie chart components (using div and svg to render the pie-charts)
+- Two of them matched the design 100%
+- Ultimately, I chose to use the third version, built with a React charting library, for better maintainability and scalability
+
+This decision balanced visual and custom utilities with long-term flexibility.
+
+```ts
+├─ routes
+│  ├─ Budgets.tsx
+│  │  ├─ // Chart Version 1 (custom – matches design 100%)
+│  │  ├─ // Chart Version 2 (custom – matches design 100%)
+│  │  └─ // Chart Version 3 (react chart library – currently used)
+│  └─ ...
+└─ ...
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🏁 Conclusion
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This project was a great opportunity to practice building a production-ready React + TypeScript application, integrate authentication with Supabase, and make thoughtful design vs. implementation trade-offs.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Feedback and suggestions are always welcome!

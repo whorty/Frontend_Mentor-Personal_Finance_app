@@ -207,12 +207,11 @@ export async function deletePot(id: number) {
   const [datab] = (await fetchBalance()) ?? [];
   const { current } = datab;
   try {
-    // Get the pot details first
     const { data: pot, error: potError } = await supabase
       .from("Personal_Finance_App-Pots")
       .select()
       .eq("id", id)
-      .single(); // Assume there is only one result
+      .single();
 
     if (potError || !pot) {
       throw new Error("Error fetching pot details.");

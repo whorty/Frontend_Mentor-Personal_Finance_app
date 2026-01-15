@@ -19,7 +19,6 @@ export default function SignUp() {
     setLoading(true);
 
     // Validation
-    // Validation
     const cleanName = name?.trim();
     const passwordRegex =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
