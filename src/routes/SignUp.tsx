@@ -48,6 +48,8 @@ export default function SignUp() {
         options: {
           data: {
             first_name: name,
+            emailRedirectTo:
+              "https://frontend-mentor-personal-finance-ap-eight.vercel.app/",
           },
         },
       });
@@ -66,10 +68,9 @@ export default function SignUp() {
         setName("");
         setEmail("");
         setPassword("");
-        // Redirect to login (Intro) after 2 seconds
         setTimeout(() => {
           navigate("/");
-        }, 2000);
+        }, 1000);
       }
     } catch (err) {
       setError("An unexpected error occurred");
