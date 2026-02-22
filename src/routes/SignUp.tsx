@@ -37,7 +37,7 @@ export default function SignUp() {
       return fail("Please enter a valid email address");
     if (!passwordRegex.test(password))
       return fail(
-        "Password must be at least 8 characters and include a letter, a number, and a special character"
+        "Password must be at least 8 characters and include a letter, a number, and a special character",
       );
 
     try {
@@ -61,7 +61,7 @@ export default function SignUp() {
 
       if (data?.user) {
         setSuccess(
-          "Account created! Check your email to confirm your account."
+          "Account created! Check your email to confirm your account, make sure to check your spam folder .",
         );
         console.log("Sign up successful");
         // Clear form
